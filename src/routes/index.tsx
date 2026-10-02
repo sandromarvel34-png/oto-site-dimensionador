@@ -16,6 +16,9 @@ import {
   GraduationCap,
   HardHat,
   Ruler,
+  Search,
+  ChartNoAxesCombined,
+  RefreshCw,
 } from "lucide-react";
 import {
   Accordion,
@@ -387,7 +390,15 @@ const FAQ: [string, string][] = [
   ],
 ];
 
-function CopyContent({ blocks, hero = false }: { blocks: CopyBlock[]; hero?: boolean }) {
+function CopyContent({
+  blocks,
+  hero = false,
+  offer = false,
+}: {
+  blocks: CopyBlock[];
+  hero?: boolean;
+  offer?: boolean;
+}) {
   return (
     <div className="hv-copy space-y-4">
       {blocks.map((block, i) => {
@@ -423,7 +434,7 @@ function CopyContent({ blocks, hero = false }: { blocks: CopyBlock[]; hero?: boo
             </h1>
           ) : block.level === 3 ? (
             <h3 key={i} className={cls}>
-              {text}
+              {text.replace(/^[^\p{L}\p{N}]+/u, "")}
             </h3>
           ) : (
             <h2 key={i} className={cls}>
@@ -438,6 +449,34 @@ function CopyContent({ blocks, hero = false }: { blocks: CopyBlock[]; hero?: boo
             </div>
           );
         if (block.kind === "shot") return <Shot key={i} label={text} ratio="aspect-[16/9]" />;
+        if (offer && block.kind === "list") {
+          const icons = [
+            Monitor,
+            Calculator,
+            Cable,
+            ChartNoAxesCombined,
+            ShieldCheck,
+            Settings2,
+            Search,
+            BookOpen,
+            History,
+            FileText,
+            RefreshCw,
+          ];
+          return (
+            <ul key={i} className="hv-included-grid">
+              {block.items?.map((item, n) => {
+                const Icon = icons[n] ?? Check;
+                return (
+                  <li key={item}>
+                    <Icon size={17} aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          );
+        }
         if (block.kind === "list" || block.kind === "negative")
           return (
             <ul key={i} className="space-y-3">
@@ -510,27 +549,50 @@ function ConsultationZigzag() {
 
 function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) {
   const box = "hv-card rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-6";
-  if (index === 0)
+  if (index === 0) {
+    const headline = blocks[0]?.text ?? "";
+    const highlight = "dimensionar comandos elétricos";
+    const headParts = headline.split(highlight);
     return (
-      <Section id="topo" className="hv-hero bg-gradient-to-br from-white via-white to-blue-50">
-        <div className="hv-hero-layout grid items-center gap-10 lg:grid-cols-2">
-          <div>
-            <p className="mb-4 text-xs font-semibold tracking-widest text-primary">
-              Dimensionador Expert
-            </p>
-            <CopyContent hero blocks={blocks.filter((b) => b.kind !== "shot")} />
+      <Section id="topo" className="hv-hero">
+        <p className="hv-eyebrow">Dimensionador Expert</p>
+        <h1 className="hv-headline">
+          {headParts[0]}
+          <span>{highlight}</span>
+          {headParts[1]}
+        </h1>
+        <div className="hv-hero-layout">
+          <div className="hv-hero-copy">
+            <p className="hv-lead">{blocks[1]?.text}</p>
+            <CopyContent blocks={blocks.filter((b) => b.kind === "cta")} />
+            <div className="hv-price-note">
+              <CopyContent blocks={blocks.slice(2, 3)} />
+            </div>
           </div>
-          <div className="hv-hero-screen lg:pl-4">
+          <div className="hv-hero-screen">
             <CopyContent blocks={blocks.filter((b) => b.kind === "shot")} />
-            <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-muted-foreground">
-              <span className="rounded-lg bg-secondary p-3">Cálculos</span>
-              <span className="rounded-lg bg-secondary p-3">Componentes</span>
-              <span className="rounded-lg bg-secondary p-3">Documentação</span>
+            <div className="hv-hero-chips">
+              <span>
+                <Calculator size={16} />
+                Cálculos
+              </span>
+              <span>
+                <Settings2 size={16} />
+                Componentes
+              </span>
+              <span>
+                <FileText size={16} />
+                Documentação
+              </span>
             </div>
           </div>
         </div>
+        <div className="hv-disclaimer">
+          <CopyContent blocks={blocks.slice(4, 5)} />
+        </div>
       </Section>
     );
+  }
 
   if (index === 1) {
     const first = blocks.findIndex((b) => b.text === "Cálculo");
@@ -599,35 +661,48 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
         </Section>
       );
     if (index === 4) {
-      const groups = [
-        {
-          title: "Cálculos e dimensionamento",
-          icons: [Calculator, Cable, Ruler, ShieldCheck, Settings2],
-          entries: cards.slice(0, 5),
-        },
-        { title: "Consulta e análise", icons: [Settings2, BookOpen], entries: cards.slice(5, 7) },
-        { title: "Histórico e documentação", icons: [History, FileText], entries: cards.slice(7) },
+      const icons = [
+        Calculator,
+        Cable,
+        ChartNoAxesCombined,
+        ShieldCheck,
+        Settings2,
+        Search,
+        BookOpen,
+        History,
+        FileText,
       ];
+      const order = [1, 0, 2, 3, 4, 5, 6, 7, 8];
       return (
         <Section className="hv-resources">
           <div className="hv-editorial-title">
             <CopyContent blocks={intro} />
           </div>
-          <div className="hv-resource-groups">
-            {groups.map(({ title, icons, entries }) => (
-              <div className="hv-resource-group" key={title}>
-                <h3 className="hv-group-title">{title}</h3>
-                {entries.map((group, i) => {
-                  const Icon = icons[i] ?? Settings2;
-                  return (
-                    <article className="hv-resource-item" key={i}>
-                      <Icon size={22} aria-hidden="true" />
-                      <CopyContent blocks={group} />
-                    </article>
-                  );
-                })}
-              </div>
-            ))}
+          <div className="hv-bento">
+            {order.map((i) => {
+              const Icon = icons[i] ?? Settings2;
+              const group = cards[i] ?? [];
+              return (
+                <article
+                  key={i}
+                  className={`hv-feature ${i === 1 ? "hv-feature-primary" : ""} ${i === 8 ? "hv-feature-document" : ""}`}
+                >
+                  <div>
+                    <span className="hv-icon-box">
+                      <Icon size={21} aria-hidden="true" />
+                    </span>
+                    <CopyContent blocks={group} />
+                  </div>
+                  {i === 1 && (
+                    <div
+                      className="hv-detail-photo"
+                      role="img"
+                      aria-label="Detalhe real do condutor recomendado pelo Dimensionador Expert"
+                    />
+                  )}
+                </article>
+              );
+            })}
           </div>
         </Section>
       );
@@ -724,9 +799,12 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
     const start = blocks.findIndex((b) => b.text === "Condição de lançamento");
     return (
       <Section id="oferta" className="hv-offer">
+        <div className="hv-offer-title">
+          <CopyContent blocks={blocks.slice(0, 1)} />
+        </div>
         <div className="hv-offer-layout grid items-start gap-8 lg:grid-cols-2">
           <div className="hv-inclusions lg:py-5">
-            <CopyContent blocks={blocks.slice(0, start)} />
+            <CopyContent offer blocks={blocks.slice(1, start)} />
           </div>
           <div className="hv-offer-card rounded-3xl border-2 border-orange-300 bg-card p-7 shadow-soft sm:p-9">
             <CopyContent blocks={blocks.slice(start)} />
