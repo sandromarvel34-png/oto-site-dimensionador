@@ -205,10 +205,30 @@ function SalesPage() {
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
-              <Zap className="h-4 w-4" />
-            </span>
-            <span className="truncate font-semibold">Dimensionador Expert</span>
+            <div className="flex items-center text-left" style={{ gap: 12 }}>
+              <img
+                src="/logo-academia-eletricista.svg"
+                alt="Academia do Eletricista"
+                width="61.42"
+                height="32"
+                style={{ width: 61.42, height: 32, minWidth: 61.42, maxWidth: 61.42 }}
+                className="shrink-0 object-contain"
+              />
+              <div className="leading-tight">
+                <span
+                  className="block font-bold tracking-tight text-slate-950"
+                  style={{ fontSize: 16, lineHeight: "20px" }}
+                >
+                  Dimensionador Expert
+                </span>
+                <span
+                  className="mt-0.5 block font-semibold uppercase tracking-[0.14em] text-slate-400"
+                  style={{ fontSize: 10, lineHeight: "12.5px" }}
+                >
+                  Comandos elétricos
+                </span>
+              </div>
+            </div>
           </div>
           <button
             onClick={() => goToCheckout("header")}
@@ -833,10 +853,30 @@ function SalesPage() {
         <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground">
-                <Zap className="h-4 w-4" />
-              </span>
-              <span className="font-semibold">Dimensionador Expert</span>
+              <div className="flex items-center text-left" style={{ gap: 12 }}>
+                <img
+                  src="/logo-academia-eletricista.svg"
+                  alt="Academia do Eletricista"
+                  width="61.42"
+                  height="32"
+                  style={{ width: 61.42, height: 32, minWidth: 61.42, maxWidth: 61.42 }}
+                  className="shrink-0 object-contain"
+                />
+                <div className="leading-tight">
+                  <span
+                    className="block font-bold tracking-tight text-slate-950"
+                    style={{ fontSize: 16, lineHeight: "20px" }}
+                  >
+                    Dimensionador Expert
+                  </span>
+                  <span
+                    className="mt-0.5 block font-semibold uppercase tracking-[0.14em] text-slate-400"
+                    style={{ fontSize: 10, lineHeight: "12.5px" }}
+                  >
+                    Comandos elétricos
+                  </span>
+                </div>
+              </div>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">Academia do Eletricista</p>
           </div>
@@ -865,10 +905,12 @@ function SalesPage() {
             O Dimensionador Expert é uma ferramenta de apoio técnico. Os resultados devem ser
             analisados considerando as características reais da instalação e as normas aplicáveis.
           </p>
-          <p className="mt-2">
-            © {new Date().getFullYear()} Dimensionador Expert — Academia do Eletricista. Todos os
-            direitos reservados.
-          </p>
+          <div className="mt-5 space-y-1 text-center text-sm">
+            <p>Copyright © {new Date().getFullYear()}</p>
+            <p className="font-bold text-foreground">Academia do Eletricista</p>
+            <p>Instituto Brasileiro de Qualificação Profissional Ltda - ME</p>
+            <p>CNPJ: 10.984.548/0001-77</p>
+          </div>
         </div>
       </footer>
 
