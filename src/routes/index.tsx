@@ -1,6 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, Fragment, type ReactNode } from "react";
-import { ArrowRight, Check, Monitor, X } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  Monitor,
+  X,
+  Calculator,
+  Cable,
+  ShieldCheck,
+  Settings2,
+  FileText,
+  History,
+  BookOpen,
+  Wrench,
+  GraduationCap,
+  HardHat,
+  Ruler,
+} from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -64,6 +80,27 @@ function Shot({
   ratio?: string;
   className?: string;
 }) {
+  const realView =
+    label === "Painel do Dimensionador Expert" || label === "Resultado"
+      ? "result"
+      : label === "Referências de componentes"
+        ? "components"
+        : null;
+  if (realView && !src)
+    return (
+      <figure className={`hv-real-image hv-real-${realView} ${className}`}>
+        <div className="hv-real-window">
+          <img
+            src="/dimensionador-resultados-real.png"
+            alt={label}
+            width="1107"
+            height="2048"
+            loading={label === "Painel do Dimensionador Expert" ? "eager" : "lazy"}
+          />
+        </div>
+        <figcaption>{label} · captura real da aplicação</figcaption>
+      </figure>
+    );
   return (
     <div
       className={`hv-shot overflow-hidden rounded-2xl border border-border bg-card shadow-soft ${className}`}
@@ -77,7 +114,7 @@ function Shot({
         <img src={src} alt={label} loading="lazy" className={`w-full object-cover ${ratio}`} />
       ) : (
         <div
-          className={`grid place-items-center bg-[linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] bg-[size:24px_24px] ${ratio}`}
+          className={`hv-shot-pending grid place-items-center bg-[linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] bg-[size:24px_24px] ${ratio}`}
         >
           <div className="flex flex-col items-center gap-2 rounded-xl bg-card/90 px-5 py-4 text-center">
             <Monitor className="h-6 w-6 text-primary" />
@@ -476,14 +513,14 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
   if (index === 0)
     return (
       <Section id="topo" className="hv-hero bg-gradient-to-br from-white via-white to-blue-50">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
+        <div className="hv-hero-layout grid items-center gap-10 lg:grid-cols-2">
           <div>
             <p className="mb-4 text-xs font-semibold tracking-widest text-primary">
               Dimensionador Expert
             </p>
             <CopyContent hero blocks={blocks.filter((b) => b.kind !== "shot")} />
           </div>
-          <div className="lg:pl-4">
+          <div className="hv-hero-screen lg:pl-4">
             <CopyContent blocks={blocks.filter((b) => b.kind === "shot")} />
             <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-muted-foreground">
               <span className="rounded-lg bg-secondary p-3">Cálculos</span>
@@ -535,6 +572,106 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
       const end = last?.findIndex((b) => b.kind === "heading" && b.level === (index === 2 ? 1 : 2));
       if (last && end !== undefined && end >= 0) closing = last.splice(end);
     }
+    if (index === 2)
+      return (
+        <Section id="pratica" className="hv-process">
+          <div className="hv-editorial-title">
+            <CopyContent blocks={intro} />
+          </div>
+          <div className="hv-process-list">
+            {cards.map((group, i) => (
+              <article className="hv-process-row" key={i}>
+                <div className="hv-process-text">
+                  <span className="hv-step-number" aria-hidden="true">
+                    0{i + 1}
+                  </span>
+                  <CopyContent blocks={group.filter((b) => b.kind !== "shot")} />
+                </div>
+                <div className="hv-process-image">
+                  <CopyContent blocks={group.filter((b) => b.kind === "shot")} />
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="hv-process-closing">
+            <CopyContent blocks={closing} />
+          </div>
+        </Section>
+      );
+    if (index === 4) {
+      const groups = [
+        {
+          title: "Cálculos e dimensionamento",
+          icons: [Calculator, Cable, Ruler, ShieldCheck, Settings2],
+          entries: cards.slice(0, 5),
+        },
+        { title: "Consulta e análise", icons: [Settings2, BookOpen], entries: cards.slice(5, 7) },
+        { title: "Histórico e documentação", icons: [History, FileText], entries: cards.slice(7) },
+      ];
+      return (
+        <Section className="hv-resources">
+          <div className="hv-editorial-title">
+            <CopyContent blocks={intro} />
+          </div>
+          <div className="hv-resource-groups">
+            {groups.map(({ title, icons, entries }) => (
+              <div className="hv-resource-group" key={title}>
+                <h3 className="hv-group-title">{title}</h3>
+                {entries.map((group, i) => {
+                  const Icon = icons[i] ?? Settings2;
+                  return (
+                    <article className="hv-resource-item" key={i}>
+                      <Icon size={22} aria-hidden="true" />
+                      <CopyContent blocks={group} />
+                    </article>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </Section>
+      );
+    }
+    if (index === 8) {
+      const icons = [Wrench, HardHat, Ruler, GraduationCap];
+      return (
+        <Section className="hv-audience">
+          <div className="hv-editorial-title">
+            <CopyContent blocks={intro} />
+          </div>
+          <div className="hv-audience-grid">
+            {cards.map((group, i) => {
+              const Icon = icons[i] ?? Wrench;
+              return (
+                <article className="hv-audience-item" key={i}>
+                  <Icon size={27} aria-hidden="true" />
+                  <CopyContent blocks={group} />
+                </article>
+              );
+            })}
+          </div>
+        </Section>
+      );
+    }
+    if (index === 5)
+      return (
+        <Section className="hv-catalog">
+          <div className="hv-catalog-layout">
+            <div>
+              <CopyContent blocks={intro} />
+              <div className="hv-manufacturers">
+                {cards.map((group, i) => (
+                  <CopyContent key={i} blocks={group.filter((b) => b.kind !== "shot")} />
+                ))}
+              </div>
+              <div className="hv-catalog-closing">
+                <CopyContent blocks={closing} />
+              </div>
+            </div>
+            <Shot label="Referências de componentes" />
+          </div>
+        </Section>
+      );
     return (
       <Section
         id={index === 2 ? "pratica" : undefined}
@@ -569,11 +706,11 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
         <div className="mb-8 text-center">
           <CopyContent blocks={blocks.slice(0, left)} />
         </div>
-        <div className="mx-auto grid max-w-4xl gap-5 md:grid-cols-2">
-          <div className={`${box} hv-without`}>
+        <div className="hv-comparison-grid mx-auto grid max-w-4xl gap-5 md:grid-cols-2">
+          <div className="hv-comparison-panel hv-without">
             <CopyContent blocks={blocks.slice(left, right)} />
           </div>
-          <div className={`${box} hv-with border-primary/30`}>
+          <div className="hv-comparison-panel hv-with">
             <CopyContent blocks={blocks.slice(right, closing)} />
           </div>
         </div>
@@ -587,7 +724,7 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
     const start = blocks.findIndex((b) => b.text === "Condição de lançamento");
     return (
       <Section id="oferta" className="hv-offer">
-        <div className="grid items-start gap-8 lg:grid-cols-2">
+        <div className="hv-offer-layout grid items-start gap-8 lg:grid-cols-2">
           <div className="hv-inclusions lg:py-5">
             <CopyContent blocks={blocks.slice(0, start)} />
           </div>
@@ -611,7 +748,7 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
   const shots = blocks.filter((b) => b.kind === "shot"),
     text = blocks.filter((b) => b.kind !== "shot");
   return (
-    <Section className={index % 2 ? "bg-secondary" : ""}>
+    <Section className={`hv-editorial hv-editorial-${index} ${index % 2 ? "bg-secondary" : ""}`}>
       <div
         className={shots.length ? "grid items-center gap-8 lg:grid-cols-2" : "mx-auto max-w-3xl"}
       >
