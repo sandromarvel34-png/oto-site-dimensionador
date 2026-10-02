@@ -210,28 +210,12 @@ function splitCards(blocks: CopyBlock[]) {
   return { intro, cards };
 }
 
-function ConsultationZigzag({ steps }: { steps: string[] }) {
-  const render = (mobile: boolean) => {
-    const width = mobile ? 360 : 760;
-    const cardWidth = mobile ? 145 : 230;
-    const left = mobile ? 10 : 40;
-    const right = width - left - cardWidth;
-    const arrowId = mobile ? "consultation-arrow-mobile" : "consultation-arrow-desktop";
-    return <svg viewBox={`0 0 ${width} 450`} role="img" aria-label="Percurso de consultas em zigue-zague: cálculo, tabela, catálogo, outro cálculo, outro catálogo, anotações e documentação." className={mobile ? "block w-full sm:hidden" : "hidden w-full sm:block"}>
-      <defs><marker id={arrowId} markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#f28a00" /></marker></defs>
-      {steps.slice(0,-1).map((_,i) => {
-        const fromLeft = i % 2 === 0;
-        const x1 = fromLeft ? left + cardWidth + 8 : right - 8;
-        const x2 = fromLeft ? right - 12 : left + cardWidth + 12;
-        return <path key={i} d={`M ${x1} ${38 + i * 60} L ${x2} ${38 + (i + 1) * 60}`} fill="none" stroke="#f28a00" strokeWidth="2.5" strokeLinecap="round" markerEnd={`url(#${arrowId})`} />;
-      })}
-      {steps.map((step,i) => <g key={step} transform={`translate(${i % 2 === 0 ? left : right}, ${14 + i * 60})`}>
-        <rect width={cardWidth} height="48" rx="12" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
-        <text x={cardWidth / 2} y="25" dominantBaseline="middle" textAnchor="middle" fill="#1e293b" fontFamily="Inter, ui-sans-serif, system-ui, sans-serif" fontSize={mobile ? 14 : 17} fontWeight="600">{step}</text>
-      </g>)}
-    </svg>;
-  };
-  return <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-slate-200 bg-white p-3 sm:p-5">{render(false)}{render(true)}</div>;
+function ConsultationZigzag() {
+  const description = "Ida e volta entre consultas: cálculo, tabela, catálogo, outro cálculo, outro catálogo, anotações e documentação.";
+  return <div className="mx-auto mt-6 max-w-3xl overflow-hidden rounded-2xl bg-slate-50 p-3 sm:p-5">
+    <img src="/consultas-desktop.svg" alt={description} width="760" height="250" className="hidden h-auto w-full sm:block" />
+    <img src="/consultas-mobile.svg" alt={description} width="360" height="330" className="block h-auto w-full sm:hidden" />
+  </div>;
 }
 
 function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) {
@@ -248,7 +232,7 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
         <div className="rounded-2xl border border-blue-100 bg-white p-6"><ul className="grid gap-3 sm:grid-cols-2">{blocks[checklist].items?.map(item => <CheckItem key={item}>{item.replace(/;$/,"")}</CheckItem>)}</ul></div>
       </div>
       <div className="mt-8"><CopyContent blocks={blocks.slice(checklist + 1, first)} /></div>
-      <ConsultationZigzag steps={blocks.slice(first,last + 1).map(block => block.text ?? "")} />
+      <ConsultationZigzag />
       <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-blue-100 bg-blue-50 p-6 text-center"><CopyContent blocks={blocks.slice(last + 1)} /></div>
     </Section>;
   }
