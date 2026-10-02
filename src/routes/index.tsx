@@ -34,7 +34,6 @@ import {
 } from "@/components/ui/accordion";
 import {
   goToCheckout,
-  VIDEO_EMBED_URL,
   PDF_EXAMPLE_URL,
   SUPPORT_URL,
   TERMS_URL,
@@ -197,7 +196,6 @@ const iconBox = "grid h-11 w-11 place-items-center rounded-xl bg-accent text-acc
 
 function SalesPage() {
   const [showBar, setShowBar] = useState(false);
-  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const hero = document.getElementById("topo");
@@ -379,34 +377,24 @@ function SalesPage() {
           text="Antes de comprar, veja um dimensionamento sendo realizado do início ao fim."
         />
         <div className="mx-auto mt-10 max-w-4xl overflow-hidden rounded-2xl border border-border bg-navy shadow-soft">
-          <div className="relative aspect-video">
-            {playing && VIDEO_EMBED_URL ? (
-              <iframe
-                src={`${VIDEO_EMBED_URL}${VIDEO_EMBED_URL.includes("?") ? "&" : "?"}autoplay=1`}
-                title="Vídeo demonstrativo do Dimensionador Expert"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 h-full w-full"
-              />
-            ) : (
-              <button
-                onClick={() => setPlaying(true)}
-                disabled={!VIDEO_EMBED_URL}
-                className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-navy-foreground disabled:cursor-default"
-              >
-                <span className="grid h-20 w-20 place-items-center rounded-full bg-primary text-primary-foreground shadow-soft transition hover:scale-105">
-                  <Play className="ml-1 h-8 w-8" />
-                </span>
-                <span className="px-4 text-center text-sm font-semibold tracking-[0.12em]">
-                  VÍDEO DEMONSTRATIVO DO DIMENSIONADOR EXPERT
-                </span>
-              </button>
-            )}
-          </div>
+          <video
+            controls
+            playsInline
+            preload="none"
+            poster="/images/dimensionador-demo-poster.png"
+            width={1200}
+            height={850}
+            aria-label="Demonstração de um dimensionamento real no Dimensionador Expert"
+            className="block h-auto w-full"
+          >
+            <source src="/videos/dimensionador-demonstracao.mp4" type="video/mp4" />
+            Seu navegador não reproduz este vídeo.{" "}
+            <a href="/videos/dimensionador-demonstracao.mp4">Baixe a demonstração.</a>
+          </video>
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-center text-muted-foreground">
-          No vídeo você verá desde o preenchimento dos dados até a geração dos resultados e
-          documentação.
+          Em 26 segundos, acompanhe os dados do motor, as condições da instalação, o resultado, a
+          memória de cálculo e as referências dos componentes. Demonstração sem áudio.
         </p>
         <div className="mt-8 flex justify-center">
           <CTA source="video">Quero acessar por R$37</CTA>
