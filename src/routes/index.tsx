@@ -45,7 +45,7 @@ function CTA({
     <button
       type="button"
       onClick={() => goToCheckout(source)}
-      className={`inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#f28a00] px-6 py-4 text-base font-semibold text-slate-950 shadow-soft transition hover:-translate-y-0.5 hover:bg-[#df7c00] active:translate-y-0 sm:w-auto ${className}`}
+      className={`hv-cta inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#f28a00] px-6 py-4 text-base font-semibold text-slate-950 shadow-soft transition hover:-translate-y-0.5 hover:bg-[#df7c00] active:translate-y-0 sm:w-auto ${className}`}
     >
       {children} <ArrowRight className="h-4 w-4" />
     </button>
@@ -66,7 +66,7 @@ function Shot({
 }) {
   return (
     <div
-      className={`overflow-hidden rounded-2xl border border-border bg-card shadow-soft ${className}`}
+      className={`hv-shot overflow-hidden rounded-2xl border border-border bg-card shadow-soft ${className}`}
     >
       <div className="flex items-center gap-1.5 border-b border-border bg-secondary px-4 py-2.5">
         <span className="h-2.5 w-2.5 rounded-full bg-border" />
@@ -102,7 +102,7 @@ function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={`px-5 py-12 sm:py-16 ${className}`}>
+    <section id={id} className={`hv-section px-5 py-12 sm:py-16 ${className}`}>
       <div className="mx-auto max-w-6xl">{children}</div>
     </section>
   );
@@ -126,7 +126,7 @@ function Heading({
       )}
       <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-4xl">{title}</h2>
       {text && (
-        <div className="mt-4 space-y-3 text-base leading-relaxed text-muted-foreground sm:text-lg">
+        <div className="mt-4 space-y-3 hv-lead text-base leading-relaxed text-muted-foreground sm:text-lg">
           {text}
         </div>
       )}
@@ -159,7 +159,7 @@ function SalesPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background pb-20 text-foreground md:pb-0">
+    <div className="hv-page min-h-screen bg-background pb-20 text-foreground md:pb-0">
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
@@ -352,7 +352,7 @@ const FAQ: [string, string][] = [
 
 function CopyContent({ blocks, hero = false }: { blocks: CopyBlock[]; hero?: boolean }) {
   return (
-    <div className="space-y-4">
+    <div className="hv-copy space-y-4">
       {blocks.map((block, i) => {
         const text = block.text ?? "";
         if (block.kind === "heading") {
@@ -364,20 +364,23 @@ function CopyContent({ blocks, hero = false }: { blocks: CopyBlock[]; hero?: boo
             );
           if (text === "R$ 37,00")
             return (
-              <p key={i} className="text-5xl font-bold tracking-tight text-primary sm:text-6xl">
+              <p
+                key={i}
+                className="hv-price text-5xl font-bold tracking-tight text-primary sm:text-6xl"
+              >
                 {text}
               </p>
             );
           const cls =
             block.level === 1
-              ? "text-2xl font-bold leading-tight tracking-tight sm:text-3xl"
+              ? "hv-heading-main text-2xl font-bold leading-tight tracking-tight sm:text-3xl"
               : block.level === 2
-                ? "text-lg font-semibold leading-relaxed sm:text-xl"
-                : "text-base font-semibold text-primary";
+                ? "hv-heading-secondary text-lg font-semibold leading-relaxed sm:text-xl"
+                : "hv-heading-detail text-base font-semibold text-primary";
           return hero && i === 0 ? (
             <h1
               key={i}
-              className="text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl lg:text-[44px]"
+              className="hv-headline text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl lg:text-[44px]"
             >
               {text}
             </h1>
@@ -393,7 +396,7 @@ function CopyContent({ blocks, hero = false }: { blocks: CopyBlock[]; hero?: boo
         }
         if (block.kind === "cta")
           return (
-            <div key={i} className="pt-3">
+            <div key={i} className="hv-action pt-3">
               <CTA source={`layout-${text}`}>{text}</CTA>
             </div>
           );
@@ -426,7 +429,7 @@ function CopyContent({ blocks, hero = false }: { blocks: CopyBlock[]; hero?: boo
             </blockquote>
           );
         return (
-          <p key={i} className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+          <p key={i} className="hv-body text-sm leading-relaxed text-muted-foreground sm:text-base">
             {text}
           </p>
         );
@@ -469,10 +472,10 @@ function ConsultationZigzag() {
 }
 
 function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) {
-  const box = "rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-6";
+  const box = "hv-card rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-6";
   if (index === 0)
     return (
-      <Section id="topo" className="bg-gradient-to-br from-white via-white to-blue-50">
+      <Section id="topo" className="hv-hero bg-gradient-to-br from-white via-white to-blue-50">
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div>
             <p className="mb-4 text-xs font-semibold tracking-widest text-primary">
@@ -533,7 +536,10 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
       if (last && end !== undefined && end >= 0) closing = last.splice(end);
     }
     return (
-      <Section id={index === 2 ? "pratica" : undefined} className={index % 2 ? "bg-secondary" : ""}>
+      <Section
+        id={index === 2 ? "pratica" : undefined}
+        className={`hv-cards hv-cards-${index} ${index % 2 ? "bg-secondary" : ""}`}
+      >
         <div className="mx-auto mb-8 max-w-3xl text-center">
           <CopyContent blocks={intro} />
         </div>
@@ -559,15 +565,15 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
       right = blocks.findIndex((b) => b.text === "Com o Dimensionador Expert");
     const closing = blocks.findIndex((b, i) => i > right && b.kind === "heading" && b.level === 1);
     return (
-      <Section className="bg-secondary">
+      <Section className="hv-comparison bg-secondary">
         <div className="mb-8 text-center">
           <CopyContent blocks={blocks.slice(0, left)} />
         </div>
         <div className="mx-auto grid max-w-4xl gap-5 md:grid-cols-2">
-          <div className={box}>
+          <div className={`${box} hv-without`}>
             <CopyContent blocks={blocks.slice(left, right)} />
           </div>
-          <div className={`${box} border-primary/30`}>
+          <div className={`${box} hv-with border-primary/30`}>
             <CopyContent blocks={blocks.slice(right, closing)} />
           </div>
         </div>
@@ -580,12 +586,12 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
   if (index === 9) {
     const start = blocks.findIndex((b) => b.text === "Condição de lançamento");
     return (
-      <Section id="oferta" className="bg-secondary">
+      <Section id="oferta" className="hv-offer">
         <div className="grid items-start gap-8 lg:grid-cols-2">
-          <div className="lg:py-5">
+          <div className="hv-inclusions lg:py-5">
             <CopyContent blocks={blocks.slice(0, start)} />
           </div>
-          <div className="rounded-3xl border-2 border-orange-300 bg-card p-7 shadow-soft sm:p-9">
+          <div className="hv-offer-card rounded-3xl border-2 border-orange-300 bg-card p-7 shadow-soft sm:p-9">
             <CopyContent blocks={blocks.slice(start)} />
           </div>
         </div>
@@ -595,7 +601,7 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
   if (index === 12)
     return (
       <Section>
-        <div className="rounded-3xl border border-primary/20 bg-accent p-7 text-center sm:p-12">
+        <div className="hv-final rounded-3xl border border-primary/20 bg-accent p-7 text-center sm:p-12">
           <div className="mx-auto max-w-3xl">
             <CopyContent blocks={blocks} />
           </div>
