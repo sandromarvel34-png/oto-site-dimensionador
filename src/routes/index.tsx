@@ -25,6 +25,9 @@ import {
   FolderOpen,
   Sparkles,
   Info,
+  Monitor,
+  Smartphone,
+  Download,
 } from "lucide-react";
 import {
   Accordion,
@@ -83,69 +86,96 @@ function CTA({
   );
 }
 
-/** Capturas reais da aplicação, sem dados pessoais da conta. */
-const systemScreenshots: Record<string, string> = {
-  "Painel do Dimensionador Expert": "dimensionador-painel.jpg",
-  "Resumo elétrico": "dimensionador-resumo.jpg",
-  "Proposta comercial": "dimensionador-proposta-preview.jpg",
-  "Informe os dados": "dimensionador-motor-nitido.jpg",
-  "Execute o dimensionamento": "dimensionador-motor-nitido.jpg",
-  "Analise os resultados": "dimensionador-resultado-nitido.jpg",
-  "Consulte os componentes": "dimensionador-componentes-nitidos.jpg",
-  "Gere sua documentação": "dimensionador-proposta-preview.jpg",
-  "Formulário de dados do motor": "dimensionador-motor-nitido.jpg",
-  "Tela de resultado do dimensionamento": "dimensionador-resultado-nitido.jpg",
-  "Card de componente — WEG": "dimensionador-weg.jpg",
-  "Card de componente — Siemens": "dimensionador-siemens.jpg",
-  "Card de componente — Schneider": "dimensionador-schneider.jpg",
-  "Memória de cálculo passo a passo": "dimensionador-memoria-nitida.jpg",
-  "Prévia da proposta comercial": "dimensionador-proposta-preview.jpg",
-};
-function Shot({
-  label,
-  src,
-  className = "",
-}: {
-  label: string;
-  src?: string;
-  ratio?: string;
-  className?: string;
-}) {
-  const imageSrc = src ?? `/images/${systemScreenshots[label]}`;
-  const isProposal = imageSrc.includes("proposta-preview");
+/** Mockup responsivo: tela real no computador e prévias de acesso e documentação. */
+function ProductMockup() {
   return (
-    <figure
-      className={`overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 shadow-xl ${className}`}
-    >
-      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-white sm:px-5">
-        <span className="text-xs font-semibold tracking-wide sm:text-sm">
-          TELA REAL · DIMENSIONADOR EXPERT
-        </span>
-        {!isProposal && (
-          <a
-            href={imageSrc}
-            target="_blank"
-            rel="noreferrer"
-            className="text-xs text-slate-200 underline underline-offset-4 hover:text-white"
-          >
-            Ampliar tela ↗
-          </a>
-        )}
-      </div>
-      <div className="p-2 pt-0 sm:p-3 sm:pt-0">
-        <div className="overflow-hidden rounded-lg bg-white">
-          <img
-            src={imageSrc}
-            alt={label}
-            loading="lazy"
-            decoding="async"
-            className="block h-auto w-full"
-            style={isProposal ? { marginTop: "-5.4%" } : undefined}
-          />
+    <figure className="mx-auto w-full max-w-4xl">
+      <div className="relative isolate aspect-[1.45]">
+        <div className="absolute inset-x-[8%] bottom-[4%] h-[28%] rounded-[50%] bg-primary/10 blur-2xl" />
+        {/* Computador: screenshot real, inteiro e sem distorção. */}
+        <div className="absolute left-[1%] top-[4%] z-10 w-[75%]">
+          <div className="rounded-[clamp(8px,1.5vw,18px)] border border-slate-700 bg-slate-900 p-[2%] shadow-2xl">
+            <div className="mb-[2%] flex items-center gap-[1.5%] px-[1%] text-[clamp(7px,0.8vw,11px)] font-semibold text-white">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+              Dimensionador Expert
+            </div>
+            <img
+              src="/images/dimensionador-resultado-nitido.jpg"
+              alt="Dimensionador Expert aberto no computador, com resultado de um dimensionamento real"
+              width={1242}
+              height={840}
+              fetchPriority="high"
+              className="block h-auto w-full rounded-[clamp(4px,0.6vw,8px)]"
+            />
+          </div>
+          <div className="mx-auto h-[clamp(18px,3vw,42px)] w-[13%] bg-gradient-to-b from-slate-800 to-slate-500" />
+          <div className="mx-auto h-[clamp(6px,0.9vw,12px)] w-[43%] rounded-t-xl rounded-b-md bg-gradient-to-b from-slate-400 to-slate-600 shadow-lg" />
+        </div>
+        {/* Celular: prévia visual dos mesmos dados exibidos na tela real. */}
+        <div className="absolute bottom-[8%] right-[8%] z-30 aspect-[9/18] w-[23%] rounded-[clamp(14px,2.4vw,30px)] border-[clamp(3px,0.6vw,7px)] border-slate-900 bg-white shadow-2xl">
+          <div className="absolute left-1/2 top-[2%] h-[3%] w-[35%] -translate-x-1/2 rounded-full bg-slate-900" />
+          <div className="flex h-full flex-col overflow-hidden rounded-[clamp(10px,1.8vw,23px)] px-[9%] pb-[10%] pt-[17%]">
+            <span className="text-[clamp(7px,0.8vw,11px)] font-bold leading-tight text-slate-900">
+              Dimensionador
+              <br />
+              Expert
+            </span>
+            <div className="mt-[15%] rounded-lg bg-blue-50 p-[9%]">
+              <span className="block text-[clamp(6px,0.6vw,9px)] font-semibold text-blue-700">
+                Resultado
+              </span>
+              <span className="mt-1 block text-[clamp(18px,2.5vw,34px)] font-bold leading-none text-slate-900">
+                16 <span className="text-[clamp(8px,0.8vw,12px)]">mm²</span>
+              </span>
+              <span className="mt-[8%] block text-[clamp(6px,0.6vw,9px)] text-slate-600">
+                Condutor recomendado
+              </span>
+            </div>
+            <div className="mt-[10%] rounded-lg bg-slate-900 p-[9%] text-white">
+              <span className="block text-[clamp(6px,0.6vw,9px)] text-blue-200">
+                Corrente nominal
+              </span>
+              <span className="mt-1 block text-[clamp(11px,1.3vw,18px)] font-bold">36,6 A</span>
+            </div>
+            <div className="mt-[10%] flex items-center justify-between text-[clamp(6px,0.7vw,10px)] text-slate-600">
+              <span>Queda de tensão</span>
+              <strong className="text-blue-700">1,35%</strong>
+            </div>
+            <div className="mx-auto mt-auto h-1 w-[40%] rounded-full bg-slate-300" />
+          </div>
+        </div>
+        {/* Folha de PDF: representação do formato de entrega, sem dados fictícios de clientes. */}
+        <div className="absolute right-[0.5%] top-[1%] z-20 aspect-[210/297] w-[23%] rotate-[6deg] rounded-sm border border-slate-200 bg-white p-[2.5%] shadow-xl">
+          <span className="inline-flex rounded bg-blue-700 px-2 py-1 text-[clamp(8px,1vw,14px)] font-bold tracking-wide text-white">
+            PDF
+          </span>
+          <FileText className="mt-[15%] h-[25%] w-[30%] text-blue-700" />
+          <span className="mt-[10%] block text-[clamp(7px,0.8vw,11px)] font-bold leading-tight text-slate-900">
+            Documentos
+            <br />
+            do projeto
+          </span>
+          <div className="mt-[15%] space-y-[8%]" aria-hidden="true">
+            <div className="h-1 w-full rounded bg-slate-200" />
+            <div className="h-1 w-[80%] rounded bg-slate-200" />
+            <div className="h-1 w-full rounded bg-slate-200" />
+          </div>
+          <Download className="absolute bottom-[8%] right-[10%] h-[10%] w-[15%] text-blue-700" />
         </div>
       </div>
-      <figcaption className="px-4 pb-4 text-sm font-medium text-slate-200 sm:px-5">
-        {label}
+      <figcaption className="mt-3 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-slate-700 sm:text-sm">
+        <span className="flex flex-col items-center gap-2">
+          <Monitor className="h-5 w-5 text-primary" />
+          No computador
+        </span>
+        <span className="flex flex-col items-center gap-2">
+          <Smartphone className="h-5 w-5 text-primary" />
+          No celular
+        </span>
+        <span className="flex flex-col items-center gap-2">
+          <Download className="h-5 w-5 text-primary" />
+          Baixe em PDF
+        </span>
       </figcaption>
     </figure>
   );
@@ -270,7 +300,7 @@ function SalesPage() {
       {/* 1 — HERO */}
       <section id="topo" className="relative overflow-hidden px-5 pb-20 pt-14 sm:pt-20">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_80%_0%,var(--accent),transparent)]" />
-        <div className="mx-auto grid max-w-6xl items-center gap-10">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.05fr_1fr]">
           <div className="reveal">
             <p className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold tracking-[0.12em] text-primary">
               <Zap className="h-3.5 w-3.5" /> DIMENSIONADOR EXPERT
@@ -302,7 +332,7 @@ function SalesPage() {
             </p>
           </div>
           <div className="relative reveal">
-            <Shot label="Tela de resultado do dimensionamento" />
+            <ProductMockup />
           </div>
         </div>
       </section>
@@ -443,8 +473,8 @@ function SalesPage() {
       {/* 5 — FUNCIONALIDADES */}
       <Section>
         <Heading eyebrow="Funcionalidades" title="Do dado do motor ao resultado final" />
-        <div className="mt-10 grid items-start gap-10 lg:grid-cols-2">
-          <div className="grid gap-3 sm:grid-cols-2">
+        <div className="mt-10">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
               [Cpu, "Dados do motor"],
               [Activity, "Corrente nominal"],
@@ -471,7 +501,6 @@ function SalesPage() {
               );
             })}
           </div>
-          <Shot label="Formulário de dados do motor" />
         </div>
       </Section>
 
@@ -482,8 +511,7 @@ function SalesPage() {
           eyebrow="Resultado"
           title="Não receba apenas um número. Veja como o dimensionamento foi construído."
         />
-        <div className="mt-10 grid items-center gap-10 lg:grid-cols-[1.4fr_1fr]">
-          <Shot label="Tela de resultado do dimensionamento" />
+        <div className="mx-auto mt-10 max-w-4xl">
           <div>
             <div className="flex flex-wrap gap-2">
               {[
@@ -533,9 +561,6 @@ function SalesPage() {
             </div>
           ))}
         </div>
-        <div className="mt-10">
-          <Shot label="Consulte os componentes" />
-        </div>
         <p className="mt-6 flex items-start gap-2 text-sm text-muted-foreground">
           <Info className="mt-0.5 h-4 w-4 shrink-0" />
           As referências devem ser verificadas pelo profissional antes da especificação final e
@@ -545,9 +570,8 @@ function SalesPage() {
 
       {/* 8 — MEMÓRIA DE CÁLCULO */}
       <Section className="bg-secondary">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <Shot label="Memória de cálculo passo a passo" className="order-2 lg:order-1" />
-          <div className="order-1 lg:order-2">
+        <div className="mx-auto max-w-4xl">
+          <div className="space-y-6">
             <Heading
               eyebrow="Memória de cálculo"
               title="Quer entender o resultado? Veja o cálculo."
@@ -570,7 +594,7 @@ function SalesPage() {
 
       {/* 9 — PDF */}
       <Section>
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+        <div className="mx-auto max-w-4xl">
           <div>
             <Heading
               eyebrow="Documentação"
@@ -599,14 +623,6 @@ function SalesPage() {
                 <FileText className="h-4 w-4 text-primary" /> Ver exemplo do PDF
               </a>
             )}
-          </div>
-          <div className="relative mx-auto w-full max-w-md">
-            <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-2xl bg-accent" />
-            <Shot
-              label="Prévia da proposta comercial"
-              ratio="aspect-[210/297]"
-              className="relative"
-            />
           </div>
         </div>
       </Section>
