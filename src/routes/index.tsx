@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, Fragment, type ReactNode } from "react";
-import { Zap, ArrowRight, Check, Monitor, X } from "lucide-react";
+import { ArrowRight, Check, Monitor, X } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { goToCheckout, SUPPORT_URL, TERMS_URL, PRIVACY_URL } from "@/lib/site-config";
 
@@ -102,7 +102,7 @@ function SalesPage() {
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground"><Zap className="h-4 w-4" /></span>
+            <img src="/logo-academia-eletricista.svg" alt="Academia do Eletricista" width="1597" height="832" className="h-10 w-auto shrink-0 sm:h-12" />
             <span className="truncate font-semibold">Dimensionador Expert</span>
           </div>
           <button onClick={() => goToCheckout("header")} className="hidden shrink-0 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 sm:inline-flex">
@@ -137,7 +137,7 @@ function SalesPage() {
         <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground"><Zap className="h-4 w-4" /></span>
+              <img src="/logo-academia-eletricista.svg" alt="Academia do Eletricista" width="1597" height="832" className="h-10 w-auto shrink-0 sm:h-12" />
               <span className="font-semibold">Dimensionador Expert</span>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">Academia do Eletricista</p>
@@ -150,7 +150,12 @@ function SalesPage() {
         </div>
         <div className="mx-auto mt-8 max-w-6xl border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground">
           <p>O Dimensionador Expert é uma ferramenta de apoio técnico. Os resultados devem ser analisados considerando as características reais da instalação e as normas aplicáveis.</p>
-          <p className="mt-2">© {new Date().getFullYear()} Dimensionador Expert — Academia do Eletricista. Todos os direitos reservados.</p>
+          <div className="mt-5 space-y-1 text-center text-sm">
+            <p>Copyright © 2026</p>
+            <p className="font-bold text-foreground">Academia do Eletricista</p>
+            <p>Instituto Brasileiro de Qualificação Profissional Ltda - ME</p>
+            <p>CNPJ: 10.984.548/0001-77</p>
+          </div>
         </div>
       </footer>
 
