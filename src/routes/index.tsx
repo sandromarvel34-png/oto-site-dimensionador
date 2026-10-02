@@ -78,7 +78,7 @@ function CTA({
     <button
       type="button"
       onClick={() => goToCheckout(source)}
-      className={`inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-semibold text-primary-foreground shadow-soft transition hover:-translate-y-0.5 hover:bg-primary/90 active:translate-y-0 sm:w-auto ${className}`}
+      className={`inline-flex w-full items-center justify-center gap-2 rounded-xl bg-cta px-6 py-4 text-base font-semibold text-cta-foreground shadow-soft transition hover:-translate-y-0.5 hover:bg-cta-hover active:translate-y-0 sm:w-auto ${className}`}
     >
       {children} <ArrowRight className="h-4 w-4" />
     </button>
@@ -232,7 +232,7 @@ function SalesPage() {
           </div>
           <button
             onClick={() => goToCheckout("header")}
-            className="hidden shrink-0 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 sm:inline-flex"
+            className="hidden shrink-0 rounded-lg bg-cta px-4 py-2 text-sm font-semibold text-cta-foreground transition hover:bg-cta-hover sm:inline-flex"
           >
             Liberar meu acesso
           </button>
@@ -741,7 +741,7 @@ function SalesPage() {
               ))}
             </ul>
           </div>
-          <div className="rounded-2xl border border-primary/30 bg-card p-7 shadow-soft">
+          <div className="rounded-2xl border border-primary/30 bg-accent p-7 shadow-soft">
             <h3 className="font-semibold text-primary">Com Dimensionador Expert</h3>
             <ul className="mt-5 space-y-3">
               {[
@@ -924,7 +924,7 @@ function SalesPage() {
           </span>
           <button
             onClick={() => goToCheckout("barra-mobile")}
-            className="shrink-0 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground"
+            className="shrink-0 rounded-lg bg-cta px-4 py-2.5 text-sm font-semibold text-cta-foreground"
           >
             Quero acessar
           </button>

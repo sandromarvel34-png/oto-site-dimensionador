@@ -33,6 +33,9 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
+  --color-cta: var(--cta);
+  --color-cta-hover: var(--cta-hover);
+  --color-cta-foreground: var(--cta-foreground);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -62,21 +65,25 @@
 }
 
 :root {
+  /* Âmbar reservado para botões de compra. */
+  --cta: oklch(0.76859 0.164659 70.0804);
+  --cta-hover: oklch(0.731544 0.158855 68.2384);
+  --cta-foreground: oklch(0.291675 0.067561 260.3713);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.24 0.05 262);
+  --foreground: oklch(0.291675 0.067561 260.3713);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.291675 0.067561 260.3713);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.52 0.19 258);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.975 0.008 250);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.291675 0.067561 260.3713);
+  --primary: oklch(0.536741 0.228605 262.1735);
+  --primary-foreground: oklch(1 0 89.8756);
+  --secondary: oklch(0.975001 0.006226 255.4747);
+  --secondary-foreground: oklch(0.291675 0.067561 260.3713);
   --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.95 0.03 255);
-  --accent-foreground: oklch(0.42 0.17 258);
+  --muted-foreground: oklch(0.445533 0.037447 257.2808);
+  --accent: oklch(0.959676 0.019007 263.0087);
+  --accent-foreground: oklch(0.536741 0.228605 262.1735);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(0.929 0.013 255.508);
@@ -144,7 +151,7 @@
 }
 
 :root {
-  --navy: oklch(0.24 0.07 262);
+  --navy: oklch(0.291675 0.067561 260.3713);
   --navy-foreground: oklch(0.98 0.005 250);
   --shadow-soft: 0 12px 32px -14px color-mix(in oklab, var(--primary) 28%, transparent);
 }
