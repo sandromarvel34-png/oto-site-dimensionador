@@ -87,24 +87,23 @@ function CTA({
 const systemScreenshots: Record<string, string> = {
   "Painel do Dimensionador Expert": "dimensionador-painel.jpg",
   "Resumo elétrico": "dimensionador-resumo.jpg",
-  "Proposta comercial": "dimensionador-proposta.jpg",
-  "Informe os dados": "dimensionador-formulario.jpg",
-  "Execute o dimensionamento": "dimensionador-dados-motor.jpg",
-  "Analise os resultados": "dimensionador-resultado.jpg",
-  "Consulte os componentes": "dimensionador-componentes.jpg",
-  "Gere sua documentação": "dimensionador-proposta.jpg",
-  "Formulário de dados do motor": "dimensionador-dados-motor.jpg",
-  "Tela de resultado do dimensionamento": "dimensionador-resultado.jpg",
+  "Proposta comercial": "dimensionador-proposta-preview.jpg",
+  "Informe os dados": "dimensionador-motor-nitido.jpg",
+  "Execute o dimensionamento": "dimensionador-motor-nitido.jpg",
+  "Analise os resultados": "dimensionador-resultado-nitido.jpg",
+  "Consulte os componentes": "dimensionador-componentes-nitidos.jpg",
+  "Gere sua documentação": "dimensionador-proposta-preview.jpg",
+  "Formulário de dados do motor": "dimensionador-motor-nitido.jpg",
+  "Tela de resultado do dimensionamento": "dimensionador-resultado-nitido.jpg",
   "Card de componente — WEG": "dimensionador-weg.jpg",
   "Card de componente — Siemens": "dimensionador-siemens.jpg",
   "Card de componente — Schneider": "dimensionador-schneider.jpg",
-  "Memória de cálculo passo a passo": "dimensionador-memoria-calculo.jpg",
-  "Prévia da proposta comercial": "dimensionador-proposta.jpg",
+  "Memória de cálculo passo a passo": "dimensionador-memoria-nitida.jpg",
+  "Prévia da proposta comercial": "dimensionador-proposta-preview.jpg",
 };
 function Shot({
   label,
   src,
-  ratio = "aspect-[16/10]",
   className = "",
 }: {
   label: string;
@@ -113,23 +112,42 @@ function Shot({
   className?: string;
 }) {
   const imageSrc = src ?? `/images/${systemScreenshots[label]}`;
+  const isProposal = imageSrc.includes("proposta-preview");
   return (
-    <div
-      className={`overflow-hidden rounded-2xl border border-border bg-card shadow-soft ${className}`}
+    <figure
+      className={`overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 shadow-xl ${className}`}
     >
-      <div className="flex items-center gap-1.5 border-b border-border bg-secondary px-4 py-2.5">
-        <span className="h-2.5 w-2.5 rounded-full bg-border" />
-        <span className="h-2.5 w-2.5 rounded-full bg-border" />
-        <span className="h-2.5 w-2.5 rounded-full bg-border" />
+      <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 text-white sm:px-5">
+        <span className="text-xs font-semibold tracking-wide sm:text-sm">
+          TELA REAL · DIMENSIONADOR EXPERT
+        </span>
+        {!isProposal && (
+          <a
+            href={imageSrc}
+            target="_blank"
+            rel="noreferrer"
+            className="text-xs text-slate-200 underline underline-offset-4 hover:text-white"
+          >
+            Ampliar tela ↗
+          </a>
+        )}
       </div>
-      <img
-        src={imageSrc}
-        alt={label}
-        loading="lazy"
-        decoding="async"
-        className={`w-full bg-secondary object-contain ${ratio}`}
-      />
-    </div>
+      <div className="p-2 pt-0 sm:p-3 sm:pt-0">
+        <div className="overflow-hidden rounded-lg bg-white">
+          <img
+            src={imageSrc}
+            alt={label}
+            loading="lazy"
+            decoding="async"
+            className="block h-auto w-full"
+            style={isProposal ? { marginTop: "-5.4%" } : undefined}
+          />
+        </div>
+      </div>
+      <figcaption className="px-4 pb-4 text-sm font-medium text-slate-200 sm:px-5">
+        {label}
+      </figcaption>
+    </figure>
   );
 }
 
@@ -251,7 +269,7 @@ function SalesPage() {
       {/* 1 — HERO */}
       <section id="topo" className="relative overflow-hidden px-5 pb-20 pt-14 sm:pt-20">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_80%_0%,var(--accent),transparent)]" />
-        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
+        <div className="mx-auto grid max-w-6xl items-center gap-10">
           <div className="reveal">
             <p className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold tracking-[0.12em] text-primary">
               <Zap className="h-3.5 w-3.5" /> DIMENSIONADOR EXPERT
@@ -283,13 +301,7 @@ function SalesPage() {
             </p>
           </div>
           <div className="relative reveal">
-            <Shot label="Painel do Dimensionador Expert" />
-            <div className="absolute -bottom-8 -left-4 hidden w-40 sm:block">
-              <Shot label="Resumo elétrico" ratio="aspect-[9/16]" />
-            </div>
-            <div className="absolute -right-3 -top-6 hidden w-44 md:block">
-              <Shot label="Proposta comercial" ratio="aspect-[3/4]" />
-            </div>
+            <Shot label="Tela de resultado do dimensionamento" />
           </div>
         </div>
       </section>
@@ -362,7 +374,6 @@ function SalesPage() {
                 </span>
                 <span className="font-semibold">{s}</span>
               </div>
-              <Shot label={s} ratio="aspect-[4/3]" />
             </li>
           ))}
         </ol>
@@ -494,10 +505,8 @@ function SalesPage() {
             </div>
           ))}
         </div>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          <Shot label="Card de componente — WEG" ratio="aspect-[363/203]" />
-          <Shot label="Card de componente — Siemens" ratio="aspect-[363/203]" />
-          <Shot label="Card de componente — Schneider" ratio="aspect-[363/203]" />
+        <div className="mt-10">
+          <Shot label="Consulte os componentes" />
         </div>
         <p className="mt-6 flex items-start gap-2 text-sm text-muted-foreground">
           <Info className="mt-0.5 h-4 w-4 shrink-0" />
