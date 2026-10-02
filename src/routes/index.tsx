@@ -65,7 +65,7 @@ function Section({ id, children, className = "" }: { id?: string; children: Reac
 function Heading({ eyebrow, title, text, center }: { eyebrow?: string; title: string; text?: ReactNode; center?: boolean }) {
   return (
     <div className={`max-w-3xl ${center ? "mx-auto text-center" : ""}`}>
-      {eyebrow && <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary">{eyebrow}</p>}
+      {eyebrow && <p className="mb-3 text-xs font-semibold tracking-[0.14em] text-primary">{eyebrow}</p>}
       <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-4xl">{title}</h2>
       {text && <div className="mt-4 space-y-3 text-base leading-relaxed text-muted-foreground sm:text-lg">{text}</div>}
     </div>
@@ -114,7 +114,7 @@ function SalesPage() {
       {COPY_SECTIONS.map((blocks, sectionIndex) => (
         <Fragment key={sectionIndex}>
         {sectionIndex === COPY_SECTIONS.length - 1 && <Section><Heading center title="Perguntas frequentes" /><Accordion type="single" collapsible className="mx-auto mt-10 max-w-3xl">{FAQ.map(([q,a],i) => <AccordionItem key={q} value={`q${i}`}><AccordionTrigger className="text-left text-base font-semibold">{q}</AccordionTrigger><AccordionContent className="text-base leading-relaxed text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion></Section>}
-        <Section id={sectionIndex === 0 ? "topo" : sectionIndex === 2 ? "pratica" : blocks.some((b) => b.kind === "heading" && b.text === "CONDIÇÃO DE LANÇAMENTO") ? "oferta" : undefined} className={sectionIndex % 2 ? "bg-secondary" : ""}>
+        <Section id={sectionIndex === 0 ? "topo" : sectionIndex === 2 ? "pratica" : blocks.some((b) => b.kind === "heading" && b.text === "Condição de lançamento") ? "oferta" : undefined} className={sectionIndex % 2 ? "bg-secondary" : ""}>
           <div className="mx-auto max-w-4xl space-y-6">
             {blocks.map((block, blockIndex) => {
               if (block.kind === "heading") {
@@ -185,7 +185,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "PARE DE PERDER TEMPO ENTRE CÁLCULOS, TABELAS E CATÁLOGOS PARA DIMENSIONAR COMANDOS ELÉTRICOS"
+      "text": "Pare de perder tempo entre cálculos, tabelas e catálogos para dimensionar comandos elétricos"
     },
     {
       "kind": "heading",
@@ -198,7 +198,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     },
     {
       "kind": "cta",
-      "text": "QUERO ACESSAR O DIMENSIONADOR EXPERT"
+      "text": "Quero acessar o Dimensionador Expert"
     },
     {
       "kind": "text",
@@ -213,7 +213,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "QUANTO TEMPO VOCÊ PERDE EM CADA DIMENSIONAMENTO?"
+      "text": "Quanto tempo você perde em cada dimensionamento?"
     },
     {
       "kind": "text",
@@ -242,31 +242,31 @@ const COPY_SECTIONS: CopyBlock[][] = [
     },
     {
       "kind": "text",
-      "text": "CÁLCULO"
+      "text": "Cálculo"
     },
     {
       "kind": "text",
-      "text": "TABELA"
+      "text": "Tabela"
     },
     {
       "kind": "text",
-      "text": "CATÁLOGO"
+      "text": "Catálogo"
     },
     {
       "kind": "text",
-      "text": "OUTRO CÁLCULO"
+      "text": "Outro cálculo"
     },
     {
       "kind": "text",
-      "text": "OUTRO CATÁLOGO"
+      "text": "Outro catálogo"
     },
     {
       "kind": "text",
-      "text": "ANOTAÇÕES"
+      "text": "Anotações"
     },
     {
       "kind": "text",
-      "text": "DOCUMENTAÇÃO"
+      "text": "Documentação"
     },
     {
       "kind": "text",
@@ -275,7 +275,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 2,
-      "text": "É TER QUE INTERROMPER O RACIOCÍNIO O TEMPO TODO PARA FAZER TODAS ELAS."
+      "text": "É ter que interromper o raciocínio o tempo todo para fazer todas elas."
     },
     {
       "kind": "text",
@@ -284,7 +284,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "DIMENSIONADOR EXPERT"
+      "text": "Dimensionador Expert"
     },
     {
       "kind": "text",
@@ -295,7 +295,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "VEJA COMO UM DIMENSIONAMENTO ACONTECE NA PRÁTICA"
+      "text": "Veja como um dimensionamento acontece na prática"
     },
     {
       "kind": "text",
@@ -304,12 +304,12 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 2,
-      "text": "QUEREMOS MOSTRAR."
+      "text": "Queremos mostrar."
     },
     {
       "kind": "heading",
       "level": 3,
-      "text": "1 — INFORME OS DADOS"
+      "text": "1 — Informe os dados"
     },
     {
       "kind": "text",
@@ -317,12 +317,12 @@ const COPY_SECTIONS: CopyBlock[][] = [
     },
     {
       "kind": "shot",
-      "text": "TELA DE ENTRADA"
+      "text": "Tela de entrada"
     },
     {
       "kind": "heading",
       "level": 3,
-      "text": "2 — EXECUTE O DIMENSIONAMENTO"
+      "text": "2 — Execute o dimensionamento"
     },
     {
       "kind": "text",
@@ -330,12 +330,12 @@ const COPY_SECTIONS: CopyBlock[][] = [
     },
     {
       "kind": "shot",
-      "text": "BOTÃO/TELA DE DIMENSIONAMENTO"
+      "text": "Botão/tela de dimensionamento"
     },
     {
       "kind": "heading",
       "level": 3,
-      "text": "3 — ANALISE OS RESULTADOS"
+      "text": "3 — Analise os resultados"
     },
     {
       "kind": "text",
@@ -375,12 +375,12 @@ const COPY_SECTIONS: CopyBlock[][] = [
     },
     {
       "kind": "shot",
-      "text": "RESULTADO"
+      "text": "Resultado"
     },
     {
       "kind": "heading",
       "level": 3,
-      "text": "4 — CONSULTE COMPONENTES"
+      "text": "4 — Consulte componentes"
     },
     {
       "kind": "text",
@@ -397,7 +397,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "5 — GERE A DOCUMENTAÇÃO"
+      "text": "5 — Gere a documentação"
     },
     {
       "kind": "text",
@@ -405,33 +405,33 @@ const COPY_SECTIONS: CopyBlock[][] = [
     },
     {
       "kind": "shot",
-      "text": "PDF GERADO"
+      "text": "PDF gerado"
     },
     {
       "kind": "heading",
       "level": 1,
-      "text": "DADOS → DIMENSIONAMENTO → RESULTADOS → COMPONENTES → DOCUMENTAÇÃO"
+      "text": "Dados → dimensionamento → resultados → componentes → documentação"
     },
     {
       "kind": "heading",
       "level": 2,
-      "text": "EM VEZ DE ESPALHAR O PROCESSO ENTRE VÁRIAS FERRAMENTAS, VOCÊ CONCENTRA AS PRINCIPAIS ETAPAS EM UM ÚNICO AMBIENTE."
+      "text": "Em vez de espalhar o processo entre várias ferramentas, você concentra as principais etapas em um único ambiente."
     },
     {
       "kind": "cta",
-      "text": "QUERO FAZER MEU PRÓXIMO DIMENSIONAMENTO"
+      "text": "Quero fazer meu próximo dimensionamento"
     }
   ],
   [
     {
       "kind": "heading",
       "level": 1,
-      "text": "NÃO RECEBA APENAS UM NÚMERO."
+      "text": "Não receba apenas um número."
     },
     {
       "kind": "heading",
       "level": 2,
-      "text": "VEJA COMO O RESULTADO FOI CONSTRUÍDO."
+      "text": "Veja como o resultado foi construído."
     },
     {
       "kind": "text",
@@ -472,19 +472,19 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 2,
-      "text": "O OBJETIVO NÃO É ESCONDER O RACIOCÍNIO."
+      "text": "O objetivo não é esconder o raciocínio."
     },
     {
       "kind": "heading",
       "level": 3,
-      "text": "É ORGANIZÁ-LO."
+      "text": "É organizá-lo."
     }
   ],
   [
     {
       "kind": "heading",
       "level": 1,
-      "text": "DO DADO DO MOTOR AO RESULTADO FINAL"
+      "text": "Do dado do motor ao resultado final"
     },
     {
       "kind": "text",
@@ -493,7 +493,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "⚡ CORRENTE NOMINAL E CORRENTE DE PROJETO"
+      "text": "⚡ Corrente nominal e corrente de projeto"
     },
     {
       "kind": "text",
@@ -502,7 +502,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "🔌 DIMENSIONAMENTO DE CONDUTORES"
+      "text": "🔌 Dimensionamento de condutores"
     },
     {
       "kind": "text",
@@ -511,7 +511,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "📉 QUEDA DE TENSÃO"
+      "text": "📉 Queda de tensão"
     },
     {
       "kind": "text",
@@ -520,7 +520,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "🛡️ PROTEÇÃO"
+      "text": "🛡️ Proteção"
     },
     {
       "kind": "text",
@@ -529,7 +529,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "⚙️ CONTATORES E RELÉS"
+      "text": "⚙️ Contatores e relés"
     },
     {
       "kind": "text",
@@ -538,7 +538,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "🔎 REFERÊNCIAS DE COMPONENTES"
+      "text": "🔎 Referências de componentes"
     },
     {
       "kind": "text",
@@ -547,7 +547,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "🧮 MEMÓRIA DE CÁLCULO"
+      "text": "🧮 Memória de cálculo"
     },
     {
       "kind": "text",
@@ -556,7 +556,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "📁 HISTÓRICO"
+      "text": "📁 Histórico"
     },
     {
       "kind": "text",
@@ -565,7 +565,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "📄 DOCUMENTAÇÃO"
+      "text": "📄 Documentação"
     },
     {
       "kind": "text",
@@ -576,7 +576,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "E NA HORA DE PROCURAR OS COMPONENTES?"
+      "text": "E na hora de procurar os componentes?"
     },
     {
       "kind": "text",
@@ -585,7 +585,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 2,
-      "text": "ENCONTRAR REFERÊNCIAS COMPATÍVEIS."
+      "text": "Encontrar referências compatíveis."
     },
     {
       "kind": "text",
@@ -625,12 +625,12 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 2,
-      "text": "MENOS TEMPO PROCURANDO CATÁLOGO POR CATÁLOGO."
+      "text": "Menos tempo procurando catálogo por catálogo."
     },
     {
       "kind": "heading",
       "level": 3,
-      "text": "MAIS CONTINUIDADE NO SEU DIMENSIONAMENTO."
+      "text": "Mais continuidade no seu dimensionamento."
     },
     {
       "kind": "text",
@@ -641,7 +641,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "TERMINE O DIMENSIONAMENTO COM AS INFORMAÇÕES ORGANIZADAS"
+      "text": "Termine o dimensionamento com as informações organizadas"
     },
     {
       "kind": "text",
@@ -669,19 +669,19 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 2,
-      "text": "PORQUE UM TRABALHO TÉCNICO BEM APRESENTADO TAMBÉM COMUNICA PROFISSIONALISMO."
+      "text": "Porque um trabalho técnico bem apresentado também comunica profissionalismo."
     }
   ],
   [
     {
       "kind": "heading",
       "level": 1,
-      "text": "COLOQUE OS DOIS PROCESSOS LADO A LADO"
+      "text": "Coloque os dois processos lado a lado"
     },
     {
       "kind": "heading",
       "level": 2,
-      "text": "SEM O DIMENSIONADOR EXPERT"
+      "text": "Sem o Dimensionador Expert"
     },
     {
       "kind": "negative",
@@ -696,7 +696,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 2,
-      "text": "COM O DIMENSIONADOR EXPERT"
+      "text": "Com o Dimensionador Expert"
     },
     {
       "kind": "list",
@@ -712,24 +712,24 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "O DIMENSIONADOR NÃO FAZ O PROFISSIONAL DEIXAR DE PENSAR."
+      "text": "O dimensionador não faz o profissional deixar de pensar."
     },
     {
       "kind": "heading",
       "level": 2,
-      "text": "ELE EVITA QUE O PROFISSIONAL PRECISE ESPALHAR O TRABALHO ENTRE VÁRIOS LUGARES."
+      "text": "Ele evita que o profissional precise espalhar o trabalho entre vários lugares."
     }
   ],
   [
     {
       "kind": "heading",
       "level": 1,
-      "text": "PARA QUEM É O DIMENSIONADOR EXPERT?"
+      "text": "Para quem é o Dimensionador Expert?"
     },
     {
       "kind": "heading",
       "level": 3,
-      "text": "ELETRICISTAS"
+      "text": "Eletricistas"
     },
     {
       "kind": "text",
@@ -738,7 +738,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "TÉCNICOS EM ELETROTÉCNICA"
+      "text": "Técnicos em eletrotécnica"
     },
     {
       "kind": "text",
@@ -747,7 +747,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "ENGENHEIROS E PROJETISTAS"
+      "text": "Engenheiros e projetistas"
     },
     {
       "kind": "text",
@@ -756,7 +756,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "ESTUDANTES"
+      "text": "Estudantes"
     },
     {
       "kind": "text",
@@ -767,12 +767,12 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "AGORA VEJA O QUE VOCÊ RECEBE AO LIBERAR SEU ACESSO"
+      "text": "Agora veja o que você recebe ao liberar seu acesso"
     },
     {
       "kind": "heading",
       "level": 2,
-      "text": "6 MESES DE DIMENSIONADOR EXPERT"
+      "text": "6 Meses de Dimensionador Expert"
     },
     {
       "kind": "text",
@@ -797,12 +797,12 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "CONDIÇÃO DE LANÇAMENTO"
+      "text": "Condição de lançamento"
     },
     {
       "kind": "heading",
       "level": 2,
-      "text": "ACESSO FUNDADOR"
+      "text": "Acesso fundador"
     },
     {
       "kind": "text",
@@ -815,12 +815,12 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "6 MESES DE ACESSO"
+      "text": "6 Meses de acesso"
     },
     {
       "kind": "heading",
       "level": 2,
-      "text": "POR UM ÚNICO PAGAMENTO DE"
+      "text": "Por um único pagamento de"
     },
     {
       "kind": "heading",
@@ -830,16 +830,16 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "SEM MENSALIDADE."
+      "text": "Sem mensalidade."
     },
     {
       "kind": "heading",
       "level": 3,
-      "text": "SEM RENOVAÇÃO AUTOMÁTICA DURANTE OS 6 MESES CONTRATADOS."
+      "text": "Sem renovação automática durante os 6 meses contratados."
     },
     {
       "kind": "cta",
-      "text": "LIBERAR MEU ACESSO POR R$ 37"
+      "text": "Liberar meu acesso por R$ 37"
     },
     {
       "kind": "text",
@@ -850,7 +850,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "POR QUE R$ 37?"
+      "text": "Por que R$ 37?"
     },
     {
       "kind": "text",
@@ -866,15 +866,15 @@ const COPY_SECTIONS: CopyBlock[][] = [
     },
     {
       "kind": "text",
-      "text": "VOCÊ UTILIZA A FERRAMENTA."
+      "text": "Você utiliza a ferramenta."
     },
     {
       "kind": "text",
-      "text": "NÓS RECEBEMOS FEEDBACK DO USO REAL."
+      "text": "Nós recebemos feedback do uso real."
     },
     {
       "kind": "text",
-      "text": "O PRODUTO CONTINUA EVOLUINDO."
+      "text": "O produto continua evoluindo."
     },
     {
       "kind": "text",
@@ -883,7 +883,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "R$ 37 POR 6 MESES."
+      "text": "R$ 37 por 6 meses."
     },
     {
       "kind": "text",
@@ -902,7 +902,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "PENSE NO SEU PRÓXIMO DIMENSIONAMENTO"
+      "text": "Pense no seu próximo dimensionamento"
     },
     {
       "kind": "text",
@@ -919,7 +919,7 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 2,
-      "text": "ESSA É A PROPOSTA DO DIMENSIONADOR EXPERT."
+      "text": "Essa é a proposta do Dimensionador Expert."
     },
     {
       "kind": "text",
@@ -932,16 +932,16 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 2,
-      "text": "MAS COLOCAR CÁLCULOS, RESULTADOS, COMPONENTES E DOCUMENTAÇÃO MAIS PERTO UNS DOS OUTROS."
+      "text": "Mas colocar cálculos, resultados, componentes e documentação mais perto uns dos outros."
     },
     {
       "kind": "heading",
       "level": 1,
-      "text": "POR R$ 37,00, VOCÊ PODE USAR O DIMENSIONADOR EXPERT DURANTE 6 MESES."
+      "text": "Por R$ 37,00, você pode usar o Dimensionador Expert durante 6 meses."
     },
     {
       "kind": "cta",
-      "text": "QUERO LIBERAR MEU ACESSO"
+      "text": "Quero liberar meu acesso"
     },
     {
       "kind": "text",
@@ -952,22 +952,22 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 1,
-      "text": "SEU PRÓXIMO DIMENSIONAMENTO PODE SER MAIS ORGANIZADO."
+      "text": "Seu próximo dimensionamento pode ser mais organizado."
     },
     {
       "kind": "heading",
       "level": 2,
-      "text": "CENTRALIZE CÁLCULOS, RESULTADOS, COMPONENTES E DOCUMENTAÇÃO EM UM ÚNICO AMBIENTE."
+      "text": "Centralize cálculos, resultados, componentes e documentação em um único ambiente."
     },
     {
       "kind": "heading",
       "level": 1,
-      "text": "DIMENSIONADOR EXPERT"
+      "text": "Dimensionador Expert"
     },
     {
       "kind": "heading",
       "level": 2,
-      "text": "6 MESES DE ACESSO"
+      "text": "6 Meses de acesso"
     },
     {
       "kind": "heading",
@@ -977,11 +977,11 @@ const COPY_SECTIONS: CopyBlock[][] = [
     {
       "kind": "heading",
       "level": 3,
-      "text": "PAGAMENTO ÚNICO"
+      "text": "Pagamento único"
     },
     {
       "kind": "cta",
-      "text": "QUERO ACESSAR O DIMENSIONADOR EXPERT"
+      "text": "Quero acessar o Dimensionador Expert"
     },
     {
       "kind": "text",
