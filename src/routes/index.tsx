@@ -102,7 +102,15 @@ function SalesPage() {
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
           <div className="flex min-w-0 items-center gap-2">
-            <img src="/logo-dimensionador-expert.svg" alt="Dimensionador Expert — Comandos elétricos" width="322" height="67" className="h-auto w-[280px] max-w-full shrink-0 sm:w-[322px]" />
+            <div className="flex items-center gap-3 text-left">
+              <div className="flex h-9 items-center">
+                <img src="/logo-academia-eletricista.svg" alt="Academia do Eletricista" width="1597" height="832" className="h-8 w-auto object-contain" />
+              </div>
+              <div className="leading-tight">
+                <span className="block text-base font-bold tracking-tight text-slate-950">Dimensionador Expert</span>
+                <span className="mt-0.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">Comandos elétricos</span>
+              </div>
+            </div>
           </div>
           <button onClick={() => goToCheckout("header")} className="hidden shrink-0 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 sm:inline-flex">
             Liberar meu acesso
@@ -136,7 +144,15 @@ function SalesPage() {
         <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <img src="/logo-dimensionador-expert.svg" alt="Dimensionador Expert — Comandos elétricos" width="322" height="67" className="h-auto w-[280px] max-w-full shrink-0 sm:w-[322px]" />
+              <div className="flex items-center gap-3 text-left">
+              <div className="flex h-9 items-center">
+                <img src="/logo-academia-eletricista.svg" alt="Academia do Eletricista" width="1597" height="832" className="h-8 w-auto object-contain" />
+              </div>
+              <div className="leading-tight">
+                <span className="block text-base font-bold tracking-tight text-slate-950">Dimensionador Expert</span>
+                <span className="mt-0.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">Comandos elétricos</span>
+              </div>
+            </div>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">Academia do Eletricista</p>
           </div>
