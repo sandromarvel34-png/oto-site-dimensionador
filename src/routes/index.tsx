@@ -24,7 +24,6 @@ import {
   Ruler,
   FolderOpen,
   Sparkles,
-  Monitor,
   Info,
 } from "lucide-react";
 import {
@@ -85,7 +84,24 @@ function CTA({
   );
 }
 
-/** Espaço para screenshot real do sistema. Passe `src` quando a imagem estiver disponível. */
+/** Capturas reais da aplicação, sem dados pessoais da conta. */
+const systemScreenshots: Record<string, string> = {
+  "Painel do Dimensionador Expert": "dimensionador-painel.jpg",
+  "Resumo elétrico": "dimensionador-resumo.jpg",
+  "Proposta comercial": "dimensionador-proposta.jpg",
+  "Informe os dados": "dimensionador-formulario.jpg",
+  "Execute o dimensionamento": "dimensionador-dados-motor.jpg",
+  "Analise os resultados": "dimensionador-resultado.jpg",
+  "Consulte os componentes": "dimensionador-componentes.jpg",
+  "Gere sua documentação": "dimensionador-proposta.jpg",
+  "Formulário de dados do motor": "dimensionador-dados-motor.jpg",
+  "Tela de resultado do dimensionamento": "dimensionador-resultado.jpg",
+  "Card de componente — WEG": "dimensionador-weg.jpg",
+  "Card de componente — Siemens": "dimensionador-siemens.jpg",
+  "Card de componente — Schneider": "dimensionador-schneider.jpg",
+  "Memória de cálculo passo a passo": "dimensionador-memoria-calculo.jpg",
+  "Prévia da proposta comercial": "dimensionador-proposta.jpg",
+};
 function Shot({
   label,
   src,
@@ -97,6 +113,7 @@ function Shot({
   ratio?: string;
   className?: string;
 }) {
+  const imageSrc = src ?? `/images/${systemScreenshots[label]}`;
   return (
     <div
       className={`overflow-hidden rounded-2xl border border-border bg-card shadow-soft ${className}`}
@@ -106,19 +123,13 @@ function Shot({
         <span className="h-2.5 w-2.5 rounded-full bg-border" />
         <span className="h-2.5 w-2.5 rounded-full bg-border" />
       </div>
-      {src ? (
-        <img src={src} alt={label} loading="lazy" className={`w-full object-cover ${ratio}`} />
-      ) : (
-        <div
-          className={`grid place-items-center bg-[linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] bg-[size:24px_24px] ${ratio}`}
-        >
-          <div className="flex flex-col items-center gap-2 rounded-xl bg-card/90 px-5 py-4 text-center">
-            <Monitor className="h-6 w-6 text-primary" />
-            <span className="text-sm font-medium text-foreground">{label}</span>
-            <span className="text-xs text-muted-foreground">Screenshot real do sistema</span>
-          </div>
-        </div>
-      )}
+      <img
+        src={imageSrc}
+        alt={label}
+        loading="lazy"
+        decoding="async"
+        className={`w-full bg-secondary object-contain ${ratio}`}
+      />
     </div>
   );
 }
@@ -276,10 +287,10 @@ function SalesPage() {
           <div className="relative reveal">
             <Shot label="Painel do Dimensionador Expert" />
             <div className="absolute -bottom-8 -left-4 hidden w-40 sm:block">
-              <Shot label="Resultado (celular)" ratio="aspect-[9/16]" />
+              <Shot label="Resumo elétrico" ratio="aspect-[9/16]" />
             </div>
             <div className="absolute -right-3 -top-6 hidden w-44 md:block">
-              <Shot label="PDF gerado" ratio="aspect-[3/4]" />
+              <Shot label="Proposta comercial" ratio="aspect-[3/4]" />
             </div>
           </div>
         </div>
@@ -496,9 +507,9 @@ function SalesPage() {
           ))}
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
-          <Shot label="Card de componente — WEG" ratio="aspect-[4/3]" />
-          <Shot label="Card de componente — Siemens" ratio="aspect-[4/3]" />
-          <Shot label="Card de componente — Schneider" ratio="aspect-[4/3]" />
+          <Shot label="Card de componente — WEG" ratio="aspect-[363/203]" />
+          <Shot label="Card de componente — Siemens" ratio="aspect-[363/203]" />
+          <Shot label="Card de componente — Schneider" ratio="aspect-[363/203]" />
         </div>
         <p className="mt-6 flex items-start gap-2 text-sm text-muted-foreground">
           <Info className="mt-0.5 h-4 w-4 shrink-0" />
@@ -567,7 +578,7 @@ function SalesPage() {
           <div className="relative mx-auto w-full max-w-md">
             <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-2xl bg-accent" />
             <Shot
-              label="Folha A4 — PDF gerado pelo sistema"
+              label="Prévia da proposta comercial"
               ratio="aspect-[210/297]"
               className="relative"
             />
