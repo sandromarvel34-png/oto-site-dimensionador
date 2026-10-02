@@ -25,7 +25,7 @@ function CTA({ children, source, className = "" }: { children: ReactNode; source
     <button
       type="button"
       onClick={() => goToCheckout(source)}
-      className={`inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-semibold text-primary-foreground shadow-soft transition hover:-translate-y-0.5 hover:bg-primary/90 active:translate-y-0 sm:w-auto ${className}`}
+      className={`inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#f28a00] px-6 py-4 text-base font-semibold text-slate-950 shadow-soft transition hover:-translate-y-0.5 hover:bg-[#df7c00] active:translate-y-0 sm:w-auto ${className}`}
     >
       {children} <ArrowRight className="h-4 w-4" />
     </button>
@@ -211,11 +211,29 @@ function splitCards(blocks: CopyBlock[]) {
 }
 function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) {
   const box = "rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-6";
-  if (index === 0) return <Section id="topo"><div className="grid items-center gap-10 lg:grid-cols-2"><div><p className="mb-4 text-xs font-semibold tracking-widest text-primary">Dimensionador Expert</p><CopyContent hero blocks={blocks.filter(b => b.kind !== "shot")} /></div><div className="lg:pl-4"><CopyContent blocks={blocks.filter(b => b.kind === "shot")} /><div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-muted-foreground"><span className="rounded-lg bg-secondary p-3">Cálculos</span><span className="rounded-lg bg-secondary p-3">Componentes</span><span className="rounded-lg bg-secondary p-3">Documentação</span></div></div></div></Section>;
+  if (index === 0) return <Section id="topo" className="bg-gradient-to-br from-white via-white to-blue-50"><div className="grid items-center gap-10 lg:grid-cols-2"><div><p className="mb-4 text-xs font-semibold tracking-widest text-primary">Dimensionador Expert</p><CopyContent hero blocks={blocks.filter(b => b.kind !== "shot")} /></div><div className="lg:pl-4"><CopyContent blocks={blocks.filter(b => b.kind === "shot")} /><div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-muted-foreground"><span className="rounded-lg bg-secondary p-3">Cálculos</span><span className="rounded-lg bg-secondary p-3">Componentes</span><span className="rounded-lg bg-secondary p-3">Documentação</span></div></div></div></Section>;
+
+  if (index === 1) {
+    const first = blocks.findIndex(b => b.text === "Cálculo");
+    const last = blocks.findIndex(b => b.text === "Documentação");
+    const checklist = blocks.findIndex(b => b.kind === "list");
+    return <Section className="bg-slate-50">
+      <div className="grid items-start gap-8 lg:grid-cols-[1.1fr_1fr]">
+        <CopyContent blocks={blocks.slice(0, checklist)} />
+        <div className="rounded-2xl border border-blue-100 bg-white p-6"><ul className="grid gap-3 sm:grid-cols-2">{blocks[checklist].items?.map(item => <CheckItem key={item}>{item.replace(/;$/,"")}</CheckItem>)}</ul></div>
+      </div>
+      <div className="mt-8"><CopyContent blocks={blocks.slice(checklist + 1, first)} /></div>
+      <ol className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
+        {blocks.slice(first,last + 1).map((block,i) => <li key={block.text} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"><span className="mb-3 flex h-7 w-7 items-center justify-center rounded-lg bg-orange-50 text-xs font-bold text-orange-700">{i + 1}</span><span className="text-sm font-semibold text-slate-800">{block.text}</span></li>)}
+      </ol>
+      <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-blue-100 bg-blue-50 p-6 text-center"><CopyContent blocks={blocks.slice(last + 1)} /></div>
+    </Section>;
+  }
   if ([2,4,5,8].includes(index)) {
-    const { intro, cards } = splitCards(blocks);
-    let closing: CopyBlock[] = [];
-    if ((index === 2 || index === 5) && cards.length) {
+    const catalogClosing = index === 5 ? blocks.findIndex(b => b.text === "Menos tempo procurando catálogo por catálogo.") : -1;
+    const { intro, cards } = splitCards(catalogClosing >= 0 ? blocks.slice(0,catalogClosing) : blocks);
+    let closing: CopyBlock[] = catalogClosing >= 0 ? blocks.slice(catalogClosing) : [];
+    if (index === 2 && cards.length) {
       const last = cards[cards.length - 1];
       const end = last.findIndex(b => b.kind === "heading" && b.level === (index === 2 ? 1 : 2));
       if (end >= 0) closing = last.splice(end);
@@ -229,7 +247,7 @@ function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) 
   }
   if (index === 9) {
     const start = blocks.findIndex(b => b.text === "Condição de lançamento");
-    return <Section id="oferta" className="bg-secondary"><div className="grid items-start gap-8 lg:grid-cols-2"><div className="lg:py-5"><CopyContent blocks={blocks.slice(0,start)} /></div><div className="rounded-3xl border-2 border-primary/25 bg-card p-7 shadow-soft sm:p-9"><CopyContent blocks={blocks.slice(start)} /></div></div></Section>;
+    return <Section id="oferta" className="bg-secondary"><div className="grid items-start gap-8 lg:grid-cols-2"><div className="lg:py-5"><CopyContent blocks={blocks.slice(0,start)} /></div><div className="rounded-3xl border-2 border-orange-300 bg-card p-7 shadow-soft sm:p-9"><CopyContent blocks={blocks.slice(start)} /></div></div></Section>;
   }
   if (index === 12) return <Section><div className="rounded-3xl border border-primary/20 bg-accent p-7 text-center sm:p-12"><div className="mx-auto max-w-3xl"><CopyContent blocks={blocks} /></div></div></Section>;
   const shots = blocks.filter(b => b.kind === "shot"), text = blocks.filter(b => b.kind !== "shot");
