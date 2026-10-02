@@ -392,7 +392,7 @@ function SalesPage() {
           <div className="relative aspect-video">
             {videoLoaded ? (
               <iframe
-                src="https://www.youtube-nocookie.com/embed/J6ofpTy-8oY?autoplay=1&playsinline=1&rel=0"
+                src="https://www.youtube-nocookie.com/embed/rMAqEe2uzW8?autoplay=1&playsinline=1&rel=0"
                 title="Demonstração do Dimensionador Expert"
                 allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
                 allowFullScreen
@@ -407,14 +407,14 @@ function SalesPage() {
                 className="group absolute inset-0 flex items-center justify-center"
               >
                 <img
-                  src="https://i.ytimg.com/vi/J6ofpTy-8oY/maxresdefault.jpg"
+                  src="https://i.ytimg.com/vi/rMAqEe2uzW8/maxresdefault.jpg"
                   alt="Capa do vídeo de demonstração do Dimensionador Expert"
                   loading="lazy"
                   decoding="async"
                   onError={(event) => {
                     const image = event.currentTarget;
                     if (!image.src.endsWith("/hqdefault.jpg")) {
-                      image.src = "https://i.ytimg.com/vi/J6ofpTy-8oY/hqdefault.jpg";
+                      image.src = "https://i.ytimg.com/vi/rMAqEe2uzW8/hqdefault.jpg";
                     }
                   }}
                   className="absolute inset-0 h-full w-full object-cover"
