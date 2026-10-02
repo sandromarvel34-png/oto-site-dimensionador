@@ -1,34 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
-import {
-  ArrowUpRight,
-  Check,
-  Calculator,
-  Cable,
-  ShieldCheck,
-  Settings2,
-  FileText,
-  History,
-  Layers3,
-  BookOpen,
-  Monitor,
-  ChevronRight,
-  RotateCcw,
-} from "lucide-react";
+import { useEffect, useState, Fragment, type ReactNode } from "react";
+import { ArrowRight, Check, Monitor, X } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  goToCheckout,
-  SUPPORT_URL,
-  TERMS_URL,
-  PRIVACY_URL,
-  VIDEO_EMBED_URL,
-  PDF_EXAMPLE_URL,
-} from "@/lib/site-config";
+import { goToCheckout, SUPPORT_URL, TERMS_URL, PRIVACY_URL } from "@/lib/site-config";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -37,593 +16,1417 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Centralize o dimensionamento de condutores, proteções e componentes, com memória de cálculo e documentação. R$ 37 por 6 meses.",
+          "Dimensione condutores, proteções e componentes de comandos elétricos com mais rapidez e organização utilizando o Dimensionador Expert.",
       },
-      { property: "og:title", content: "Dimensionador Expert | Do motor à documentação" },
+      { property: "og:title", content: "Dimensionador Expert" },
       {
         property: "og:description",
-        content:
-          "Cálculos, componentes e documentação em um único ambiente. Acesso por 6 meses com pagamento único.",
+        content: "Uma ferramenta online de apoio ao dimensionamento de comandos elétricos.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: SalesPage,
 });
 
-function Brand() {
-  return (
-    <div className="de-brand">
-      <img
-        src="/logo-academia-eletricista.svg"
-        alt="Academia do Eletricista"
-        width="62"
-        height="33"
-      />
-      <div>
-        <strong>Dimensionador Expert</strong>
-        <span>COMANDOS ELÉTRICOS</span>
-      </div>
-    </div>
-  );
-}
+/* ---------- peças reutilizáveis ---------- */
+
 function CTA({
-  children = "Quero acessar o Dimensionador",
+  children,
   source,
   className = "",
 }: {
-  children?: ReactNode;
+  children: ReactNode;
   source: string;
   className?: string;
 }) {
   return (
-    <button type="button" className={`de-cta ${className}`} onClick={() => goToCheckout(source)}>
-      {children}
-      <ArrowUpRight size={19} aria-hidden="true" />
+    <button
+      type="button"
+      onClick={() => goToCheckout(source)}
+      className={`inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#f28a00] px-6 py-4 text-base font-semibold text-slate-950 shadow-soft transition hover:-translate-y-0.5 hover:bg-[#df7c00] active:translate-y-0 sm:w-auto ${className}`}
+    >
+      {children} <ArrowRight className="h-4 w-4" />
     </button>
   );
 }
+
+/** Espaço para screenshot real do sistema. Passe `src` quando a imagem estiver disponível. */
+function Shot({
+  label,
+  src,
+  ratio = "aspect-[16/10]",
+  className = "",
+}: {
+  label: string;
+  src?: string;
+  ratio?: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`overflow-hidden rounded-2xl border border-border bg-card shadow-soft ${className}`}
+    >
+      <div className="flex items-center gap-1.5 border-b border-border bg-secondary px-4 py-2.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-border" />
+        <span className="h-2.5 w-2.5 rounded-full bg-border" />
+        <span className="h-2.5 w-2.5 rounded-full bg-border" />
+      </div>
+      {src ? (
+        <img src={src} alt={label} loading="lazy" className={`w-full object-cover ${ratio}`} />
+      ) : (
+        <div
+          className={`grid place-items-center bg-[linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] bg-[size:24px_24px] ${ratio}`}
+        >
+          <div className="flex flex-col items-center gap-2 rounded-xl bg-card/90 px-5 py-4 text-center">
+            <Monitor className="h-6 w-6 text-primary" />
+            <span className="text-sm font-medium text-foreground">{label}</span>
+            <span className="text-xs text-muted-foreground">
+              Imagem demonstrativa em preparação
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Section({
   id,
   children,
   className = "",
 }: {
-  id?: string;
+  id?: string | undefined;
   children: ReactNode;
   className?: string;
 }) {
   return (
-    <section id={id} className={`de-section ${className}`}>
-      <div className="de-container">{children}</div>
+    <section id={id} className={`px-5 py-12 sm:py-16 ${className}`}>
+      <div className="mx-auto max-w-6xl">{children}</div>
     </section>
   );
 }
-function Intro({ label, title, children }: { label: string; title: string; children?: ReactNode }) {
+
+function Heading({
+  eyebrow,
+  title,
+  text,
+  center,
+}: {
+  eyebrow?: string;
+  title: string;
+  text?: ReactNode;
+  center?: boolean;
+}) {
   return (
-    <div className="de-intro">
-      <span className="de-eyebrow">{label}</span>
-      <h2>{title}</h2>
-      {children && <p>{children}</p>}
+    <div className={`max-w-3xl ${center ? "mx-auto text-center" : ""}`}>
+      {eyebrow && (
+        <p className="mb-3 text-xs font-semibold tracking-[0.14em] text-primary">{eyebrow}</p>
+      )}
+      <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-4xl">{title}</h2>
+      {text && (
+        <div className="mt-4 space-y-3 text-base leading-relaxed text-muted-foreground sm:text-lg">
+          {text}
+        </div>
+      )}
     </div>
   );
 }
 
-const benefits = [
-  {
-    icon: Cable,
-    title: "Condutores e queda de tensão",
-    text: "Consulte a seção recomendada e a queda de tensão calculada para as condições informadas.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Proteção, contatores e relés",
-    text: "Reúna as informações de proteção e dos dispositivos relacionados ao dimensionamento.",
-  },
-  {
-    icon: Settings2,
-    title: "Referências de componentes",
-    text: "Consulte as opções disponíveis no catálogo interno, com referências de WEG, Siemens e Schneider.",
-  },
-  {
-    icon: BookOpen,
-    title: "Memória de cálculo",
-    text: "Acompanhe os critérios e cálculos apresentados pelo sistema para conferir os resultados.",
-  },
-  {
-    icon: History,
-    title: "Histórico de dimensionamentos",
-    text: "Mantenha seus dimensionamentos reunidos e retome os trabalhos anteriores para consulta.",
-  },
-  {
-    icon: FileText,
-    title: "Documentação organizada",
-    text: "Gere documentos com dados do projeto, resultados e informações profissionais.",
-  },
-];
-const faq = [
-  [
-    "O que é o Dimensionador Expert?",
-    "É uma ferramenta online de apoio ao dimensionamento de comandos elétricos. Reúne cálculos, resultados, referências de componentes e documentação em um único ambiente.",
-  ],
-  [
-    "O pagamento de R$ 37 é mensal?",
-    "Não. A oferta é de R$ 37 em pagamento único por 6 meses de acesso, contados a partir da ativação.",
-  ],
-  [
-    "O acesso renova automaticamente?",
-    "Não nesta oferta. Ao final dos 6 meses, você poderá contratar um novo período se desejar continuar utilizando a ferramenta.",
-  ],
-  [
-    "Preciso instalar? Posso usar no celular?",
-    "O sistema funciona online pelo navegador, com interface responsiva para computadores, tablets e smartphones. É necessária conexão com a internet.",
-  ],
-  [
-    "Quais fabricantes aparecem no catálogo?",
-    "O catálogo reúne referências disponíveis de fabricantes como WEG, Siemens e Schneider. A disponibilidade depende dos componentes cadastrados no sistema.",
-  ],
-  [
-    "Posso consultar os cálculos e gerar documentos?",
-    "Sim. Você pode consultar as memórias de cálculo disponíveis e gerar documentação relacionada ao dimensionamento.",
-  ],
-  [
-    "A ferramenta substitui a análise do profissional?",
-    "Não. Os resultados devem ser conferidos pelo profissional responsável, considerando as condições reais da instalação, as especificações dos fabricantes e as normas aplicáveis.",
-  ],
-  [
-    "As atualizações estão incluídas?",
-    "As atualizações disponibilizadas durante os seus 6 meses de acesso estão incluídas.",
-  ],
-];
-
-/** Diagrama editorial dos recursos, sem simular resultados ou uma tela real. */
-function ProductFlow() {
+function CheckItem({ children }: { children: ReactNode }) {
   return (
-    <div className="de-product-flow">
-      <div className="de-flow-top">
-        <Layers3 size={18} />
-        <span>UM AMBIENTE. UM FLUXO.</span>
-      </div>
-      <div className="de-flow-heading">
-        <span className="de-eyebrow">Dimensionador Expert</span>
-        <h2>
-          Do motor à<br />
-          <em>documentação.</em>
-        </h2>
-      </div>
-      <div className="de-flow-steps">
-        {[
-          {
-            icon: Calculator,
-            title: "Dados & dimensionamento",
-            note: "Motor e condições da instalação",
-          },
-          {
-            icon: ShieldCheck,
-            title: "Resultados & componentes",
-            note: "Condutores, proteção e dispositivos",
-          },
-          {
-            icon: FileText,
-            title: "Memória & documentação",
-            note: "Critérios e informações organizadas",
-          },
-        ].map(({ icon: Icon, title, note }, i) => (
-          <div className="de-flow-step" key={title}>
-            <span className="de-flow-icon">
-              <Icon size={22} />
-            </span>
-            <div>
-              <strong>{title}</strong>
-              <p>{note}</p>
-            </div>
-            <span className="de-flow-number">0{i + 1}</span>
-          </div>
-        ))}
-      </div>
-      <div className="de-flow-foot">
-        <Monitor size={15} />
-        Ferramenta online de apoio técnico
-      </div>
-    </div>
+    <li className="flex items-start gap-3">
+      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent text-accent-foreground">
+        <Check className="h-3.5 w-3.5" />
+      </span>
+      <span className="text-foreground">{children}</span>
+    </li>
   );
 }
+
+/* ---------- página ---------- */
 
 function SalesPage() {
   const [showBar, setShowBar] = useState(false);
+
   useEffect(() => {
     const hero = document.getElementById("topo");
     if (!hero) return;
-    const observer = new IntersectionObserver(([entry]) =>
-      setShowBar(entry ? !entry.isIntersecting : false),
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
+    const io = new IntersectionObserver(([e]) => setShowBar(e ? !e.isIntersecting : false));
+    io.observe(hero);
+    return () => io.disconnect();
   }, []);
+
   return (
-    <div className="de-page">
-      <header className="de-header">
-        <div className="de-container de-header-inner">
-          <Brand />
-          <nav aria-label="Navegação principal">
-            <a href="#como-funciona">Como funciona</a>
-            <a href="#recursos">Recursos</a>
-          </nav>
-          <CTA source="header">Liberar meu acesso</CTA>
-        </div>
-      </header>
-      <Section id="topo" className="de-hero">
-        <div className="de-hero-grid">
-          <div>
-            <span className="de-eyebrow">
-              <span className="de-dot" />
-              PARA QUEM TRABALHA COM COMANDOS ELÉTRICOS
-            </span>
-            <h1>
-              Seu dimensionamento.
-              <br />
-              <span>Em um só lugar.</span>
-            </h1>
-            <p className="de-hero-description">
-              Centralize o dimensionamento de condutores, proteções e componentes — com memória de
-              cálculo e documentação organizada.
-            </p>
-            <ul className="de-hero-checks">
-              {[
-                "Dados do motor e da instalação",
-                "Resultados e referências de componentes",
-                "Histórico e documentação",
-              ].map((text) => (
-                <li key={text}>
-                  <Check size={17} />
-                  {text}
-                </li>
-              ))}
-            </ul>
-            <div className="de-hero-action">
-              <CTA source="hero" />
-              <a href="#como-funciona" className="de-text-link">
-                Conhecer a ferramenta <ChevronRight size={16} />
-              </a>
-            </div>
-            <p className="de-price-note">
-              <strong>R$ 37</strong> por 6 meses <span>·</span> Pagamento único
-            </p>
-          </div>
-          <ProductFlow />
-        </div>
-        <div className="de-hero-strip">
-          <span>
-            <Calculator size={17} />
-            Cálculos reunidos
-          </span>
-          <span>
-            <Settings2 size={17} />
-            Referências de componentes
-          </span>
-          <span>
-            <FileText size={17} />
-            Documentação integrada
-          </span>
-        </div>
-      </Section>
-      <Section className="de-problem">
-        <div className="de-problem-grid">
-          <div>
-            <span className="de-eyebrow">MENOS INTERRUPÇÕES</span>
-            <h2>
-              Uma consulta aqui.
-              <br />
-              Outra ali.
-              <br />
-              <span>O raciocínio fica pelo caminho.</span>
-            </h2>
-            <p>
-              Entre cálculos, tabelas, catálogos e anotações, o trabalho exige voltar às mesmas
-              informações várias vezes.
-            </p>
-            <p>
-              O Dimensionador Expert reúne as principais etapas para você acompanhar o processo com
-              mais continuidade.
-            </p>
-          </div>
-          <div className="de-consultations">
-            <div className="de-consultations-label">
-              <RotateCcw size={16} />
-              Consultas espalhadas
-            </div>
-            <div
-              className="de-zigzag"
-              aria-label="Consultas com retornos entre cálculo, tabela e catálogo"
-            >
-              <span>Cálculo</span>
-              <span className="de-return" aria-label="ida e volta">
-                ↔
-              </span>
-              <span>Tabela</span>
-              <span className="de-down" aria-hidden="true">
-                ↕
-              </span>
-              <span>Outro cálculo</span>
-              <span className="de-return" aria-label="ida e volta">
-                ↔
-              </span>
-              <span>Catálogo</span>
-              <span className="de-down de-down-left" aria-hidden="true">
-                ↕
-              </span>
-              <span>Anotações</span>
-              <span className="de-return" aria-label="ida e volta">
-                ↔
-              </span>
-              <span>Documentação</span>
-            </div>
-            <div className="de-central-flow">
-              <Layers3 size={20} />
-              <div>
-                <strong>No Dimensionador Expert</strong>
-                <p>Dados → resultados → documentação</p>
+    <div className="min-h-screen bg-background pb-20 text-foreground md:pb-0">
+      {/* Header */}
+      <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
+          <div className="flex min-w-0 items-center gap-2">
+            <div className="flex items-center text-left" style={{ gap: 12 }}>
+              <div className="flex h-9 items-center">
+                <img
+                  src="/logo-academia-eletricista.svg"
+                  alt="Academia do Eletricista"
+                  width="61.42"
+                  height="32"
+                  style={{ width: 61.42, height: 32, minWidth: 61.42, maxWidth: 61.42 }}
+                  className="shrink-0 object-contain"
+                />
               </div>
-            </div>
-          </div>
-        </div>
-      </Section>
-      <Section id="como-funciona">
-        <Intro label="COMO FUNCIONA" title="Um processo com começo, meio e entrega.">
-          Informe as condições do projeto, confira os resultados e organize a documentação.
-        </Intro>
-        <div className="de-steps">
-          {[
-            {
-              icon: Calculator,
-              title: "Informe os dados",
-              text: "Preencha as informações do motor e as condições da instalação.",
-            },
-            {
-              icon: ShieldCheck,
-              title: "Confira o dimensionamento",
-              text: "Consulte condutores, queda de tensão, proteção e referências de componentes.",
-            },
-            {
-              icon: FileText,
-              title: "Organize a entrega",
-              text: "Acompanhe a memória de cálculo e gere a documentação do dimensionamento.",
-            },
-          ].map(({ icon: Icon, title, text }, i) => (
-            <article className="de-step" key={title}>
-              <div className="de-step-top">
-                <span>0{i + 1}</span>
-                <Icon size={24} />
-              </div>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
-        </div>
-        {VIDEO_EMBED_URL && (
-          <div className="de-video">
-            <iframe
-              src={VIDEO_EMBED_URL}
-              title="Demonstração real do Dimensionador Expert"
-              loading="lazy"
-              allow="fullscreen; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        )}
-      </Section>
-      <Section id="recursos" className="de-soft">
-        <Intro label="RECURSOS DA FERRAMENTA" title="As informações que você precisa, reunidas.">
-          Do cálculo à consulta de componentes, com recursos para acompanhar e registrar seu
-          trabalho.
-        </Intro>
-        <div className="de-benefits">
-          {benefits.map(({ icon: Icon, title, text }) => (
-            <article className="de-benefit" key={title}>
-              <span className="de-icon">
-                <Icon size={23} />
-              </span>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
-        </div>
-        <p className="de-catalog-note">
-          As referências de fabricantes devem ser conferidas antes da especificação final e da
-          aquisição.
-        </p>
-      </Section>
-      <Section className="de-doc-section">
-        <div className="de-document-grid">
-          <div>
-            <span className="de-eyebrow">DO RESULTADO AO REGISTRO</span>
-            <h2>
-              Seu trabalho merece
-              <br />
-              uma entrega organizada.
-            </h2>
-            <p>
-              Reúna os dados do projeto e os resultados do dimensionamento em documentos para
-              consulta, arquivo ou apresentação.
-            </p>
-            <ul className="de-document-checks">
-              {[
-                "Identificação do projeto e informações da carga",
-                "Resultados e componentes",
-                "Critérios e informações profissionais",
-              ].map((text) => (
-                <li key={text}>
-                  <Check size={17} />
-                  {text}
-                </li>
-              ))}
-            </ul>
-            {PDF_EXAMPLE_URL && (
-              <a className="de-text-link" href={PDF_EXAMPLE_URL} target="_blank" rel="noreferrer">
-                Ver documento real de exemplo <ArrowUpRight size={17} />
-              </a>
-            )}
-          </div>
-          <div
-            className="de-document-art"
-            aria-label="Esquema das informações reunidas na documentação"
-          >
-            <div className="de-paper">
-              <div className="de-paper-brand">
-                <FileText size={23} />
-                <span>
-                  DOCUMENTAÇÃO
-                  <br />
-                  <strong>Dimensionador Expert</strong>
+              <div className="leading-tight">
+                <span
+                  className="block font-bold tracking-tight text-slate-950"
+                  style={{ fontSize: 16, lineHeight: "20px" }}
+                >
+                  Dimensionador Expert
+                </span>
+                <span
+                  className="mt-0.5 block font-semibold uppercase tracking-[0.14em] text-slate-400"
+                  style={{ fontSize: 10, lineHeight: "12.5px" }}
+                >
+                  Comandos elétricos
                 </span>
               </div>
-              <div className="de-paper-rule" />
-              {[
-                "Dados do projeto",
-                "Resultados do dimensionamento",
-                "Componentes e critérios",
-                "Informações profissionais",
-              ].map((text, i) => (
-                <div className="de-paper-row" key={text}>
-                  <span>0{i + 1}</span>
-                  <strong>{text}</strong>
-                  <Check size={16} />
-                </div>
-              ))}
-              <p className="de-paper-caption">Esquema de conteúdo · não representa um PDF gerado</p>
             </div>
           </div>
+          <button
+            onClick={() => goToCheckout("header")}
+            className="hidden shrink-0 rounded-lg bg-[#f28a00] px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-[#df7c00] sm:inline-flex"
+          >
+            Liberar meu acesso
+          </button>
         </div>
-      </Section>
-      <Section className="de-author-section">
-        <div className="de-author-grid">
-          <div className="de-author-mark">
-            <BookOpen size={38} />
-            <strong>26+</strong>
-            <span>ANOS DE EXPERIÊNCIA</span>
-          </div>
-          <div>
-            <span className="de-eyebrow">CONHECIMENTO APLICADO À PRÁTICA</span>
-            <h2>
-              Por quem conhece
-              <br />o trabalho e a sala de aula.
-            </h2>
-            <p>
-              Uma ferramenta da Academia do Eletricista, criada por Sandro Nogueira, engenheiro
-              eletricista e professor com mais de 26 anos de experiência.
-            </p>
-            <p>
-              Para eletricistas, técnicos, engenheiros, projetistas e estudantes que trabalham ou
-              estudam dimensionamento de comandos elétricos.
-            </p>
-          </div>
-        </div>
-      </Section>
-      <Section id="oferta" className="de-offer-section">
-        <div className="de-offer-grid">
-          <div>
-            <span className="de-eyebrow">SEU PRÓXIMO DIMENSIONAMENTO</span>
-            <h2>
-              Comece com
-              <br />6 meses de acesso.
-            </h2>
-            <p>
-              Tenha os recursos do Dimensionador Expert disponíveis em um único ambiente, com
-              pagamento único e sem mensalidade.
-            </p>
-            <ul className="de-offer-checks">
-              {[
-                "Dimensionamento e consulta de componentes",
-                "Memórias de cálculo disponíveis",
-                "Histórico e geração de documentação",
-                "Atualizações disponibilizadas no período",
-              ].map((text) => (
-                <li key={text}>
-                  <Check size={18} />
-                  {text}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="de-offer-card">
-            <span className="de-offer-tag">DIMENSIONADOR EXPERT</span>
-            <h3>Acesso por 6 meses</h3>
-            <p className="de-offer-price">
-              <span>R$</span> 37<span>,00</span>
-            </p>
-            <p className="de-offer-payment">Um único pagamento. Sem mensalidade.</p>
-            <CTA source="offer">Liberar meu acesso por R$ 37</CTA>
-            <div className="de-offer-conditions">
-              <p>
-                <Check size={15} />6 meses a partir da ativação
-              </p>
-              <p>
-                <Check size={15} />
-                Sem renovação automática
-              </p>
-              <p>
-                <Monitor size={15} />
-                Acesso online pelo navegador
-              </p>
-            </div>
-          </div>
-        </div>
-      </Section>
-      <Section id="perguntas">
-        <Intro label="ANTES DE COMEÇAR" title="Perguntas frequentes" />
-        <Accordion type="single" collapsible className="de-faq">
-          {faq.map(([q, a], i) => (
-            <AccordionItem key={q} value={`faq-${i}`}>
-              <AccordionTrigger className="text-left text-base font-semibold">{q}</AccordionTrigger>
-              <AccordionContent className="text-base leading-relaxed text-muted-foreground">
-                {a}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-        <div className="de-final">
-          <h3>Mais continuidade no seu próximo dimensionamento.</h3>
-          <CTA source="final" />
-          <p>R$ 37 · 6 meses · Pagamento único</p>
-        </div>
-      </Section>
-      <footer className="de-footer">
-        <div className="de-container">
-          <div className="de-footer-top">
-            <Brand />
-            <nav aria-label="Informações e suporte">
-              {[
-                ["Termos de Uso", TERMS_URL],
-                ["Política de Privacidade", PRIVACY_URL],
-                ["Suporte", SUPPORT_URL],
-              ]
-                .filter(([, url]) => url)
-                .map(([label, url]) => (
-                  <a key={label} href={url} target="_blank" rel="noreferrer">
-                    {label}
-                  </a>
+      </header>
+
+      {COPY_SECTIONS.map((blocks, sectionIndex) => (
+        <Fragment key={sectionIndex}>
+          {sectionIndex === COPY_SECTIONS.length - 1 && (
+            <Section>
+              <Heading center title="Perguntas frequentes" />
+              <Accordion type="single" collapsible className="mx-auto mt-8 max-w-3xl">
+                {FAQ.map(([q, a], i) => (
+                  <AccordionItem key={q} value={`q${i}`}>
+                    <AccordionTrigger className="text-left text-base font-semibold">
+                      {q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-base leading-relaxed text-muted-foreground">
+                      {a}
+                    </AccordionContent>
+                  </AccordionItem>
                 ))}
-            </nav>
+              </Accordion>
+            </Section>
+          )}
+          <CopySection blocks={blocks} index={sectionIndex} />
+        </Fragment>
+      ))}
+      {/* Rodapé */}
+      <footer className="border-t border-border px-5 py-12">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:justify-between">
+          <div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center text-left" style={{ gap: 12 }}>
+                <div className="flex h-9 items-center">
+                  <img
+                    src="/logo-academia-eletricista.svg"
+                    alt="Academia do Eletricista"
+                    width="61.42"
+                    height="32"
+                    style={{ width: 61.42, height: 32, minWidth: 61.42, maxWidth: 61.42 }}
+                    className="shrink-0 object-contain"
+                  />
+                </div>
+                <div className="leading-tight">
+                  <span
+                    className="block font-bold tracking-tight text-slate-950"
+                    style={{ fontSize: 16, lineHeight: "20px" }}
+                  >
+                    Dimensionador Expert
+                  </span>
+                  <span
+                    className="mt-0.5 block font-semibold uppercase tracking-[0.14em] text-slate-400"
+                    style={{ fontSize: 10, lineHeight: "12.5px" }}
+                  >
+                    Comandos elétricos
+                  </span>
+                </div>
+              </div>
+            </div>
+            <p className="mt-2 text-sm text-muted-foreground">Academia do Eletricista</p>
           </div>
-          <p className="de-responsibility">
-            Ferramenta de apoio técnico. Os resultados devem ser verificados pelo profissional
-            responsável considerando as condições reais da instalação, as especificações dos
-            fabricantes e as normas aplicáveis.
+          <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            {[
+              ["Termos de Uso", TERMS_URL],
+              ["Política de Privacidade", PRIVACY_URL],
+              ["Suporte", SUPPORT_URL],
+            ]
+              .filter(([, u]) => u)
+              .map(([t, u]) => (
+                <a
+                  key={t}
+                  href={u}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-foreground"
+                >
+                  {t}
+                </a>
+              ))}
+          </nav>
+        </div>
+        <div className="mx-auto mt-8 max-w-6xl border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground">
+          <p>
+            O Dimensionador Expert é uma ferramenta de apoio técnico. Os resultados devem ser
+            analisados considerando as características reais da instalação e as normas aplicáveis.
           </p>
-          <div className="de-legal">
-            <span>© {new Date().getFullYear()} Academia do Eletricista</span>
-            <span>
-              Instituto Brasileiro de Qualificação Profissional Ltda - ME · CNPJ: 10.984.548/0001-77
-            </span>
+          <div className="mt-5 space-y-1 text-center text-sm">
+            <p>Copyright © 2026</p>
+            <p className="font-bold text-foreground">Academia do Eletricista</p>
+            <p>Instituto Brasileiro de Qualificação Profissional Ltda - ME</p>
+            <p>CNPJ: 10.984.548/0001-77</p>
           </div>
         </div>
       </footer>
-      <div className={`de-mobile-bar ${showBar ? "is-visible" : ""}`}>
-        <div>
-          <strong>R$ 37</strong>
-          <span>6 meses · pagamento único</span>
+
+      {/* Barra fixa mobile */}
+      <div
+        className={`fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 px-4 py-3 backdrop-blur transition-transform md:hidden ${showBar ? "translate-y-0" : "translate-y-full"}`}
+      >
+        <div className="flex items-center justify-between gap-3">
+          <span className="min-w-0 truncate text-sm font-semibold">
+            Dimensionador Expert — R$37
+          </span>
+          <button
+            onClick={() => goToCheckout("barra-mobile")}
+            className="shrink-0 rounded-lg bg-[#f28a00] px-4 py-2.5 text-sm font-semibold text-slate-950"
+          >
+            Quero acessar
+          </button>
         </div>
-        <CTA source="mobile">Quero acessar</CTA>
       </div>
     </div>
   );
 }
+
+const FAQ: [string, string][] = [
+  [
+    "O que é o Dimensionador Expert?",
+    "É uma ferramenta online de apoio ao dimensionamento de comandos elétricos, reunindo cálculos, resultados, componentes e documentação em um único ambiente.",
+  ],
+  ["Por quanto tempo terei acesso?", "6 meses a partir da ativação do acesso."],
+  [
+    "Vou pagar R$37 todos os meses?",
+    "Não. Nesta oferta inicial o pagamento é único: R$37 pelos 6 meses de acesso.",
+  ],
+  [
+    "Haverá cobrança automática depois dos 6 meses?",
+    "Não nesta oferta. Ao final do período, você poderá receber uma nova opção de acesso caso queira continuar utilizando a ferramenta.",
+  ],
+  [
+    "Preciso instalar algum programa?",
+    "Não. O Dimensionador Expert funciona online através do navegador.",
+  ],
+  [
+    "Posso usar no celular?",
+    "Sim. A interface é responsiva e compatível com computadores, tablets e smartphones.",
+  ],
+  [
+    "A ferramenta substitui um profissional habilitado?",
+    "Não. O Dimensionador Expert é uma ferramenta de apoio ao dimensionamento. As condições reais da instalação, requisitos normativos e responsabilidade técnica devem ser avaliados pelo profissional responsável.",
+  ],
+  [
+    "Quais fabricantes aparecem no sistema?",
+    "Atualmente o sistema trabalha com referências disponíveis de fabricantes como WEG, Siemens e Schneider.",
+  ],
+  [
+    "Posso gerar documentação?",
+    "Sim. O Dimensionador Expert possui recursos para organizar os resultados e gerar documentação relacionada ao dimensionamento.",
+  ],
+  [
+    "O produto continuará recebendo melhorias?",
+    "A proposta do período Fundador é utilizar o feedback dos primeiros usuários para continuar aprimorando a plataforma. As atualizações disponibilizadas durante seu período de acesso estarão incluídas.",
+  ],
+];
+
+function CopyContent({ blocks, hero = false }: { blocks: CopyBlock[]; hero?: boolean }) {
+  return (
+    <div className="space-y-4">
+      {blocks.map((block, i) => {
+        const text = block.text ?? "";
+        if (block.kind === "heading") {
+          if (hero && i === 1)
+            return (
+              <p key={i} className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+                {text}
+              </p>
+            );
+          if (text === "R$ 37,00")
+            return (
+              <p key={i} className="text-5xl font-bold tracking-tight text-primary sm:text-6xl">
+                {text}
+              </p>
+            );
+          const cls =
+            block.level === 1
+              ? "text-2xl font-bold leading-tight tracking-tight sm:text-3xl"
+              : block.level === 2
+                ? "text-lg font-semibold leading-relaxed sm:text-xl"
+                : "text-base font-semibold text-primary";
+          return hero && i === 0 ? (
+            <h1
+              key={i}
+              className="text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl lg:text-[44px]"
+            >
+              {text}
+            </h1>
+          ) : block.level === 3 ? (
+            <h3 key={i} className={cls}>
+              {text}
+            </h3>
+          ) : (
+            <h2 key={i} className={cls}>
+              {text}
+            </h2>
+          );
+        }
+        if (block.kind === "cta")
+          return (
+            <div key={i} className="pt-3">
+              <CTA source={`layout-${text}`}>{text}</CTA>
+            </div>
+          );
+        if (block.kind === "shot") return <Shot key={i} label={text} ratio="aspect-[16/9]" />;
+        if (block.kind === "list" || block.kind === "negative")
+          return (
+            <ul key={i} className="space-y-3">
+              {block.items?.map((item) =>
+                block.kind === "negative" ? (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground"
+                  >
+                    <X className="mt-1 h-4 w-4 shrink-0" />
+                    {item}
+                  </li>
+                ) : (
+                  <CheckItem key={item}>{item}</CheckItem>
+                ),
+              )}
+            </ul>
+          );
+        if (block.kind === "quote")
+          return (
+            <blockquote
+              key={i}
+              className="rounded-xl border-l-4 border-primary bg-secondary px-5 py-4 font-semibold"
+            >
+              {text}
+            </blockquote>
+          );
+        return (
+          <p key={i} className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+            {text}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+function splitCards(blocks: CopyBlock[]) {
+  const intro: CopyBlock[] = [],
+    cards: CopyBlock[][] = [];
+  for (const block of blocks) {
+    if (block.kind === "heading" && block.level === 3) cards.push([block]);
+    else if (cards.length) cards[cards.length - 1]?.push(block);
+    else intro.push(block);
+  }
+  return { intro, cards };
+}
+
+function ConsultationZigzag() {
+  const description =
+    "Ida e volta entre consultas: cálculo, tabela, catálogo, outro cálculo, outro catálogo, anotações e documentação.";
+  return (
+    <div className="mx-auto mt-6 max-w-3xl overflow-hidden rounded-2xl bg-slate-50 p-3 sm:p-5">
+      <img
+        src="/consultas-desktop.svg"
+        alt={description}
+        width="760"
+        height="250"
+        className="hidden h-auto w-full sm:block"
+      />
+      <img
+        src="/consultas-mobile.svg"
+        alt={description}
+        width="360"
+        height="330"
+        className="block h-auto w-full sm:hidden"
+      />
+    </div>
+  );
+}
+
+function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) {
+  const box = "rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-6";
+  if (index === 0)
+    return (
+      <Section id="topo" className="bg-gradient-to-br from-white via-white to-blue-50">
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <p className="mb-4 text-xs font-semibold tracking-widest text-primary">
+              Dimensionador Expert
+            </p>
+            <CopyContent hero blocks={blocks.filter((b) => b.kind !== "shot")} />
+          </div>
+          <div className="lg:pl-4">
+            <CopyContent blocks={blocks.filter((b) => b.kind === "shot")} />
+            <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-muted-foreground">
+              <span className="rounded-lg bg-secondary p-3">Cálculos</span>
+              <span className="rounded-lg bg-secondary p-3">Componentes</span>
+              <span className="rounded-lg bg-secondary p-3">Documentação</span>
+            </div>
+          </div>
+        </div>
+      </Section>
+    );
+
+  if (index === 1) {
+    const first = blocks.findIndex((b) => b.text === "Cálculo");
+    const last = blocks.findIndex((b) => b.text === "Documentação");
+    const checklist = blocks.findIndex((b) => b.kind === "list");
+    return (
+      <Section className="bg-slate-50">
+        <div className="grid items-start gap-8 lg:grid-cols-[1.1fr_1fr]">
+          <CopyContent blocks={blocks.slice(0, checklist)} />
+          <div className="rounded-2xl border border-blue-100 bg-white p-6">
+            <ul className="grid gap-3 sm:grid-cols-2">
+              {blocks[checklist]?.items?.map((item) => (
+                <CheckItem key={item}>{item.replace(/;$/, "")}</CheckItem>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="mt-8">
+          <CopyContent blocks={blocks.slice(checklist + 1, first)} />
+        </div>
+        <ConsultationZigzag />
+        <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-blue-100 bg-blue-50 p-6 text-center">
+          <CopyContent blocks={blocks.slice(last + 1)} />
+        </div>
+      </Section>
+    );
+  }
+  if ([2, 4, 5, 8].includes(index)) {
+    const catalogClosing =
+      index === 5
+        ? blocks.findIndex((b) => b.text === "Menos tempo procurando catálogo por catálogo.")
+        : -1;
+    const { intro, cards } = splitCards(
+      catalogClosing >= 0 ? blocks.slice(0, catalogClosing) : blocks,
+    );
+    let closing: CopyBlock[] = catalogClosing >= 0 ? blocks.slice(catalogClosing) : [];
+    if (index === 2 && cards.length) {
+      const last = cards[cards.length - 1];
+      const end = last?.findIndex((b) => b.kind === "heading" && b.level === (index === 2 ? 1 : 2));
+      if (last && end !== undefined && end >= 0) closing = last.splice(end);
+    }
+    return (
+      <Section id={index === 2 ? "pratica" : undefined} className={index % 2 ? "bg-secondary" : ""}>
+        <div className="mx-auto mb-8 max-w-3xl text-center">
+          <CopyContent blocks={intro} />
+        </div>
+        <div
+          className={`grid gap-5 ${index === 5 || index === 4 ? "md:grid-cols-3" : "md:grid-cols-2"}`}
+        >
+          {cards.map((group, i) => (
+            <div key={i} className={box}>
+              <CopyContent blocks={group} />
+            </div>
+          ))}
+        </div>
+        {closing.length > 0 && (
+          <div className="mx-auto mt-8 max-w-3xl text-center">
+            <CopyContent blocks={closing} />
+          </div>
+        )}
+      </Section>
+    );
+  }
+  if (index === 7) {
+    const left = blocks.findIndex((b) => b.text === "Sem o Dimensionador Expert"),
+      right = blocks.findIndex((b) => b.text === "Com o Dimensionador Expert");
+    const closing = blocks.findIndex((b, i) => i > right && b.kind === "heading" && b.level === 1);
+    return (
+      <Section className="bg-secondary">
+        <div className="mb-8 text-center">
+          <CopyContent blocks={blocks.slice(0, left)} />
+        </div>
+        <div className="mx-auto grid max-w-4xl gap-5 md:grid-cols-2">
+          <div className={box}>
+            <CopyContent blocks={blocks.slice(left, right)} />
+          </div>
+          <div className={`${box} border-primary/30`}>
+            <CopyContent blocks={blocks.slice(right, closing)} />
+          </div>
+        </div>
+        <div className="mx-auto mt-8 max-w-3xl text-center">
+          <CopyContent blocks={blocks.slice(closing)} />
+        </div>
+      </Section>
+    );
+  }
+  if (index === 9) {
+    const start = blocks.findIndex((b) => b.text === "Condição de lançamento");
+    return (
+      <Section id="oferta" className="bg-secondary">
+        <div className="grid items-start gap-8 lg:grid-cols-2">
+          <div className="lg:py-5">
+            <CopyContent blocks={blocks.slice(0, start)} />
+          </div>
+          <div className="rounded-3xl border-2 border-orange-300 bg-card p-7 shadow-soft sm:p-9">
+            <CopyContent blocks={blocks.slice(start)} />
+          </div>
+        </div>
+      </Section>
+    );
+  }
+  if (index === 12)
+    return (
+      <Section>
+        <div className="rounded-3xl border border-primary/20 bg-accent p-7 text-center sm:p-12">
+          <div className="mx-auto max-w-3xl">
+            <CopyContent blocks={blocks} />
+          </div>
+        </div>
+      </Section>
+    );
+  const shots = blocks.filter((b) => b.kind === "shot"),
+    text = blocks.filter((b) => b.kind !== "shot");
+  return (
+    <Section className={index % 2 ? "bg-secondary" : ""}>
+      <div
+        className={shots.length ? "grid items-center gap-8 lg:grid-cols-2" : "mx-auto max-w-3xl"}
+      >
+        <CopyContent blocks={text} />
+        {shots.length > 0 && <CopyContent blocks={shots} />}
+      </div>
+    </Section>
+  );
+}
+
+type CopyBlock = { kind: string; text?: string; level?: number; items?: string[] };
+const COPY_SECTIONS: CopyBlock[][] = [
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Pare de perder tempo entre cálculos, tabelas e catálogos para dimensionar comandos elétricos",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Informe os dados do motor e da instalação e centralize em uma única ferramenta o dimensionamento de condutores, proteção, queda de tensão, contatores e relés — com memória de cálculo, referências de componentes e documentação organizada.",
+    },
+    {
+      kind: "text",
+      text: "6 meses de acesso • R$ 37,00 uma única vez • Sem mensalidade",
+    },
+    {
+      kind: "cta",
+      text: "Quero acessar o Dimensionador Expert",
+    },
+    {
+      kind: "text",
+      text: "Ferramenta de apoio técnico ao dimensionamento. As condições reais da instalação, requisitos normativos e especificações finais devem ser verificados pelo profissional responsável.",
+    },
+    {
+      kind: "shot",
+      text: "Painel do Dimensionador Expert",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Quanto tempo você perde em cada dimensionamento?",
+    },
+    {
+      kind: "text",
+      text: "Dimensionar um comando elétrico não termina quando você descobre a corrente do motor.",
+    },
+    {
+      kind: "text",
+      text: "Ainda é preciso verificar:",
+    },
+    {
+      kind: "list",
+      items: [
+        "Corrente de projeto;",
+        "Condutor;",
+        "Queda de tensão;",
+        "Proteção;",
+        "Contator;",
+        "Relé;",
+        "Compatibilidade dos componentes;",
+        "Documentação do dimensionamento.",
+      ],
+    },
+    {
+      kind: "text",
+      text: "E quando cada informação está em um lugar diferente, o processo vira uma sequência de interrupções:",
+    },
+    {
+      kind: "text",
+      text: "Cálculo",
+    },
+    {
+      kind: "text",
+      text: "Tabela",
+    },
+    {
+      kind: "text",
+      text: "Catálogo",
+    },
+    {
+      kind: "text",
+      text: "Outro cálculo",
+    },
+    {
+      kind: "text",
+      text: "Outro catálogo",
+    },
+    {
+      kind: "text",
+      text: "Anotações",
+    },
+    {
+      kind: "text",
+      text: "Documentação",
+    },
+    {
+      kind: "text",
+      text: "O problema não é fazer uma dessas tarefas.",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "É ter que interromper o raciocínio o tempo todo para fazer todas elas.",
+    },
+    {
+      kind: "text",
+      text: "Foi para centralizar esse processo que criamos o:",
+    },
+    {
+      kind: "heading",
+      level: 1,
+      text: "Dimensionador Expert",
+    },
+    {
+      kind: "text",
+      text: "Uma ferramenta online de apoio ao dimensionamento de comandos elétricos.",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Veja como um dimensionamento acontece na prática",
+    },
+    {
+      kind: "text",
+      text: "Não queremos apenas dizer que a ferramenta economiza etapas.",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Queremos mostrar.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "1 — Informe os dados",
+    },
+    {
+      kind: "text",
+      text: "Preencha os dados necessários do motor e da instalação.",
+    },
+    {
+      kind: "shot",
+      text: "Tela de entrada",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "2 — Execute o dimensionamento",
+    },
+    {
+      kind: "text",
+      text: "A ferramenta processa as informações inseridas e organiza os resultados do dimensionamento.",
+    },
+    {
+      kind: "shot",
+      text: "Botão/tela de dimensionamento",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "3 — Analise os resultados",
+    },
+    {
+      kind: "text",
+      text: "Consulte em uma mesma tela informações como:",
+    },
+    {
+      kind: "text",
+      text: "Corrente nominal",
+    },
+    {
+      kind: "text",
+      text: "Corrente de projeto",
+    },
+    {
+      kind: "text",
+      text: "Condutor recomendado",
+    },
+    {
+      kind: "text",
+      text: "Queda de tensão",
+    },
+    {
+      kind: "text",
+      text: "Proteção",
+    },
+    {
+      kind: "text",
+      text: "Contator",
+    },
+    {
+      kind: "text",
+      text: "Relé",
+    },
+    {
+      kind: "text",
+      text: "Critérios utilizados",
+    },
+    {
+      kind: "shot",
+      text: "Resultado",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "4 — Consulte componentes",
+    },
+    {
+      kind: "text",
+      text: "Veja referências disponíveis no catálogo interno da ferramenta de fabricantes como:",
+    },
+    {
+      kind: "text",
+      text: "WEG • SIEMENS • SCHNEIDER",
+    },
+    {
+      kind: "shot",
+      text: "Referências de componentes",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "5 — Gere a documentação",
+    },
+    {
+      kind: "text",
+      text: "Organize os dados do projeto, resultados, componentes e informações profissionais em um documento para consulta, arquivo ou apresentação.",
+    },
+    {
+      kind: "shot",
+      text: "PDF gerado",
+    },
+    {
+      kind: "heading",
+      level: 1,
+      text: "Dados → dimensionamento → resultados → componentes → documentação",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Em vez de espalhar o processo entre várias ferramentas, você concentra as principais etapas em um único ambiente.",
+    },
+    {
+      kind: "cta",
+      text: "Quero fazer meu próximo dimensionamento",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Não receba apenas um número.",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Veja como o resultado foi construído.",
+    },
+    {
+      kind: "text",
+      text: "Uma calculadora poderia simplesmente entregar um valor na tela.",
+    },
+    {
+      kind: "text",
+      text: "Essa não é a proposta do Dimensionador Expert.",
+    },
+    {
+      kind: "text",
+      text: "Além dos resultados, a ferramenta permite consultar os critérios e memórias de cálculo disponíveis no sistema.",
+    },
+    {
+      kind: "text",
+      text: "Assim, você não vê apenas:",
+    },
+    {
+      kind: "quote",
+      text: "“Este é o resultado.”",
+    },
+    {
+      kind: "text",
+      text: "Você pode consultar também:",
+    },
+    {
+      kind: "quote",
+      text: "“Como chegamos a este resultado?”",
+    },
+    {
+      kind: "shot",
+      text: "Memória de cálculo",
+    },
+    {
+      kind: "text",
+      text: "Isso torna a ferramenta útil tanto para quem executa dimensionamentos quanto para quem está estudando, revisando conceitos ou conferindo cálculos.",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "O objetivo não é esconder o raciocínio.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "É organizá-lo.",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Do dado do motor ao resultado final",
+    },
+    {
+      kind: "text",
+      text: "Dentro do Dimensionador Expert você encontra recursos para auxiliar em:",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "⚡ Corrente nominal e corrente de projeto",
+    },
+    {
+      kind: "text",
+      text: "Organize os dados necessários para avançar no dimensionamento.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "🔌 Dimensionamento de condutores",
+    },
+    {
+      kind: "text",
+      text: "Consulte o resultado de acordo com os critérios considerados pela ferramenta.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "📉 Queda de tensão",
+    },
+    {
+      kind: "text",
+      text: "Verifique a queda de tensão calculada para as condições informadas.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "🛡️ Proteção",
+    },
+    {
+      kind: "text",
+      text: "Tenha as informações de proteção integradas ao dimensionamento.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "⚙️ Contatores e relés",
+    },
+    {
+      kind: "text",
+      text: "Consulte os dispositivos relacionados às características informadas.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "🔎 Referências de componentes",
+    },
+    {
+      kind: "text",
+      text: "Encontre opções disponíveis no catálogo interno da ferramenta sem começar uma nova busca a cada etapa.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "🧮 Memória de cálculo",
+    },
+    {
+      kind: "text",
+      text: "Consulte como determinados resultados foram obtidos.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "📁 Histórico",
+    },
+    {
+      kind: "text",
+      text: "Mantenha seus dimensionamentos reunidos para futuras consultas.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "📄 Documentação",
+    },
+    {
+      kind: "text",
+      text: "Transforme as informações do dimensionamento em um documento organizado.",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "E na hora de procurar os componentes?",
+    },
+    {
+      kind: "text",
+      text: "Depois de fazer os cálculos, ainda existe outro trabalho:",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Encontrar referências compatíveis.",
+    },
+    {
+      kind: "text",
+      text: "Sem uma ferramenta centralizada, isso normalmente significa abrir catálogos e começar outra sequência de pesquisas.",
+    },
+    {
+      kind: "text",
+      text: "No Dimensionador Expert, você pode consultar opções existentes no catálogo interno da ferramenta de fabricantes como:",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "WEG",
+    },
+    {
+      kind: "shot",
+      text: "Componente — WEG",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "SIEMENS",
+    },
+    {
+      kind: "shot",
+      text: "Componente — SIEMENS",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "SCHNEIDER",
+    },
+    {
+      kind: "shot",
+      text: "Componente — SCHNEIDER",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Menos tempo procurando catálogo por catálogo.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "Mais continuidade no seu dimensionamento.",
+    },
+    {
+      kind: "text",
+      text: "As referências apresentadas devem ser verificadas pelo profissional antes da especificação final e aquisição.",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Termine o dimensionamento com as informações organizadas",
+    },
+    {
+      kind: "text",
+      text: "O trabalho não precisa acabar em um monte de números espalhados em anotações.",
+    },
+    {
+      kind: "text",
+      text: "Depois do dimensionamento, utilize as informações do sistema para gerar documentação contendo dados como:",
+    },
+    {
+      kind: "list",
+      items: [
+        "Identificação do projeto;",
+        "Informações da carga;",
+        "Resultados do dimensionamento;",
+        "Componentes;",
+        "Critérios utilizados;",
+        "Informações profissionais.",
+      ],
+    },
+    {
+      kind: "shot",
+      text: "Documentação do dimensionamento",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Porque um trabalho técnico bem apresentado também comunica profissionalismo.",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Coloque os dois processos lado a lado",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Sem o Dimensionador Expert",
+    },
+    {
+      kind: "negative",
+      items: [
+        "Consultar informações separadamente",
+        "Alternar entre diferentes ferramentas",
+        "Procurar referências manualmente em catálogos",
+        "Organizar resultados em anotações separadas",
+        "Montar a documentação manualmente",
+      ],
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Com o Dimensionador Expert",
+    },
+    {
+      kind: "list",
+      items: [
+        "Fluxo centralizado",
+        "Resultados organizados",
+        "Memória dos cálculos disponíveis",
+        "Referências de componentes reunidas",
+        "Histórico de dimensionamentos",
+        "Documentação integrada",
+      ],
+    },
+    {
+      kind: "heading",
+      level: 1,
+      text: "O dimensionador não faz o profissional deixar de pensar.",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Ele evita que o profissional precise espalhar o trabalho entre vários lugares.",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Para quem é o Dimensionador Expert?",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "Eletricistas",
+    },
+    {
+      kind: "text",
+      text: "Que realizam serviços envolvendo motores e comandos e querem organizar melhor seus dimensionamentos.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "Técnicos em eletrotécnica",
+    },
+    {
+      kind: "text",
+      text: "Que trabalham com motores, comandos, instalações ou projetos elétricos.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "Engenheiros e projetistas",
+    },
+    {
+      kind: "text",
+      text: "Que desejam uma ferramenta complementar para apoiar cálculos, consultas e especificações.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "Estudantes",
+    },
+    {
+      kind: "text",
+      text: "Que querem acompanhar os cálculos e compreender melhor o processo por trás do dimensionamento.",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Agora veja o que você recebe ao liberar seu acesso",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "6 Meses de Dimensionador Expert",
+    },
+    {
+      kind: "text",
+      text: "Durante o período de acesso, você poderá utilizar:",
+    },
+    {
+      kind: "list",
+      items: [
+        "Plataforma online",
+        "Dimensionamentos disponíveis durante o período contratado",
+        "Dimensionamento de condutores",
+        "Verificação de queda de tensão",
+        "Proteção",
+        "Contatores e relés",
+        "Consulta aos componentes disponíveis na ferramenta",
+        "Memória dos cálculos disponíveis",
+        "Histórico de projetos",
+        "Geração de documentação",
+        "Atualizações disponibilizadas durante seu período de acesso",
+      ],
+    },
+    {
+      kind: "heading",
+      level: 1,
+      text: "Condição de lançamento",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Acesso fundador",
+    },
+    {
+      kind: "text",
+      text: "Estamos formando o primeiro grupo de usuários do Dimensionador Expert.",
+    },
+    {
+      kind: "text",
+      text: "Por isso, neste momento, você pode liberar:",
+    },
+    {
+      kind: "heading",
+      level: 1,
+      text: "6 Meses de acesso",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Por um único pagamento de",
+    },
+    {
+      kind: "heading",
+      level: 1,
+      text: "R$ 37,00",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "Sem mensalidade.",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "Sem renovação automática durante os 6 meses contratados.",
+    },
+    {
+      kind: "cta",
+      text: "Liberar meu acesso por R$ 37",
+    },
+    {
+      kind: "text",
+      text: "Acesso válido por 6 meses a partir da ativação.",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Por que R$ 37?",
+    },
+    {
+      kind: "text",
+      text: "O Dimensionador Expert está entrando em uma nova fase.",
+    },
+    {
+      kind: "text",
+      text: "Em vez de esperar que a plataforma esteja “perfeita” para colocá-la no mercado, queremos que os primeiros profissionais e estudantes utilizem a ferramenta em situações reais.",
+    },
+    {
+      kind: "text",
+      text: "Esse primeiro grupo é importante porque:",
+    },
+    {
+      kind: "text",
+      text: "Você utiliza a ferramenta.",
+    },
+    {
+      kind: "text",
+      text: "Nós recebemos feedback do uso real.",
+    },
+    {
+      kind: "text",
+      text: "O produto continua evoluindo.",
+    },
+    {
+      kind: "text",
+      text: "Por isso estamos disponibilizando esta condição inicial:",
+    },
+    {
+      kind: "heading",
+      level: 1,
+      text: "R$ 37 por 6 meses.",
+    },
+    {
+      kind: "text",
+      text: "Não é uma assinatura mensal.",
+    },
+    {
+      kind: "text",
+      text: "Não haverá renovação automática durante o período contratado.",
+    },
+    {
+      kind: "text",
+      text: "É um pagamento único para liberar os 6 meses de acesso.",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Pense no seu próximo dimensionamento",
+    },
+    {
+      kind: "text",
+      text: "Você pode continuar alternando entre:",
+    },
+    {
+      kind: "text",
+      text: "calculadora → tabela → catálogo → anotações → documento",
+    },
+    {
+      kind: "text",
+      text: "Ou pode colocar os dados do projeto em um ambiente criado justamente para organizar essas etapas.",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Essa é a proposta do Dimensionador Expert.",
+    },
+    {
+      kind: "text",
+      text: "Não substituir seu conhecimento técnico.",
+    },
+    {
+      kind: "text",
+      text: "Não tomar decisões profissionais por você.",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Mas colocar cálculos, resultados, componentes e documentação mais perto uns dos outros.",
+    },
+    {
+      kind: "heading",
+      level: 1,
+      text: "Por R$ 37,00, você pode usar o Dimensionador Expert durante 6 meses.",
+    },
+    {
+      kind: "cta",
+      text: "Quero liberar meu acesso",
+    },
+    {
+      kind: "text",
+      text: "Pagamento único • Sem mensalidade • Sem renovação automática",
+    },
+  ],
+  [
+    {
+      kind: "heading",
+      level: 1,
+      text: "Seu próximo dimensionamento pode ser mais organizado.",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "Centralize cálculos, resultados, componentes e documentação em um único ambiente.",
+    },
+    {
+      kind: "heading",
+      level: 1,
+      text: "Dimensionador Expert",
+    },
+    {
+      kind: "heading",
+      level: 2,
+      text: "6 Meses de acesso",
+    },
+    {
+      kind: "heading",
+      level: 1,
+      text: "R$ 37,00",
+    },
+    {
+      kind: "heading",
+      level: 3,
+      text: "Pagamento único",
+    },
+    {
+      kind: "cta",
+      text: "Quero acessar o Dimensionador Expert",
+    },
+    {
+      kind: "text",
+      text: "Sem mensalidade • Sem renovação automática",
+    },
+    {
+      kind: "text",
+      text: "Ferramenta de apoio técnico. Os resultados devem ser verificados pelo profissional considerando as características reais da instalação e as normas aplicáveis.",
+    },
+  ],
+];
