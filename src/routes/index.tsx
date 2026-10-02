@@ -56,7 +56,7 @@ function Shot({ label, src, ratio = "aspect-[16/10]", className = "" }: { label:
 
 function Section({ id, children, className = "" }: { id?: string; children: ReactNode; className?: string }) {
   return (
-    <section id={id} className={`px-5 py-20 sm:py-24 ${className}`}>
+    <section id={id} className={`px-5 py-12 sm:py-16 ${className}`}>
       <div className="mx-auto max-w-6xl">{children}</div>
     </section>
   );
@@ -120,23 +120,8 @@ function SalesPage() {
 
       {COPY_SECTIONS.map((blocks, sectionIndex) => (
         <Fragment key={sectionIndex}>
-        {sectionIndex === COPY_SECTIONS.length - 1 && <Section><Heading center title="Perguntas frequentes" /><Accordion type="single" collapsible className="mx-auto mt-10 max-w-3xl">{FAQ.map(([q,a],i) => <AccordionItem key={q} value={`q${i}`}><AccordionTrigger className="text-left text-base font-semibold">{q}</AccordionTrigger><AccordionContent className="text-base leading-relaxed text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion></Section>}
-        <Section id={sectionIndex === 0 ? "topo" : sectionIndex === 2 ? "pratica" : blocks.some((b) => b.kind === "heading" && b.text === "Condição de lançamento") ? "oferta" : undefined} className={sectionIndex % 2 ? "bg-secondary" : ""}>
-          <div className="mx-auto max-w-4xl space-y-6">
-            {blocks.map((block, blockIndex) => {
-              if (block.kind === "heading") {
-                const style = block.level === 1 ? "text-3xl font-bold leading-tight tracking-tight sm:text-4xl" : block.level === 2 ? "text-xl font-semibold leading-relaxed sm:text-2xl" : "text-lg font-semibold text-primary";
-                return sectionIndex === 0 && blockIndex === 0 ? <h1 key={blockIndex} className={style}>{block.text}</h1> : block.level === 3 ? <h3 key={blockIndex} className={style}>{block.text}</h3> : <h2 key={blockIndex} className={style}>{block.text}</h2>;
-              }
-              if (block.kind === "cta") return <div key={blockIndex} className="pt-2"><CTA source={`copy-${sectionIndex}-${blockIndex}`}>{block.text}</CTA></div>;
-              if (block.kind === "shot") return <Shot key={blockIndex} label={block.text ?? "Dimensionador Expert"} />;
-              if (block.kind === "negative") return <ul key={blockIndex} className="space-y-3">{block.items?.map((item) => <li key={item} className="flex items-start gap-3 text-muted-foreground"><X className="mt-1 h-4 w-4 shrink-0" />{item}</li>)}</ul>;
-              if (block.kind === "list") return <ul key={blockIndex} className="grid gap-3 sm:grid-cols-2">{block.items?.map((item) => <CheckItem key={item}>{item}</CheckItem>)}</ul>;
-              if (block.kind === "quote") return <blockquote key={blockIndex} className="border-l-4 border-primary bg-secondary p-5 text-xl font-semibold">{block.text}</blockquote>;
-              return <p key={blockIndex} className="whitespace-pre-line text-base leading-relaxed text-muted-foreground sm:text-lg">{block.text}</p>;
-            })}
-          </div>
-        </Section>
+          {sectionIndex === COPY_SECTIONS.length - 1 && <Section><Heading center title="Perguntas frequentes" /><Accordion type="single" collapsible className="mx-auto mt-8 max-w-3xl">{FAQ.map(([q,a],i) => <AccordionItem key={q} value={`q${i}`}><AccordionTrigger className="text-left text-base font-semibold">{q}</AccordionTrigger><AccordionContent className="text-base leading-relaxed text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion></Section>}
+          <CopySection blocks={blocks} index={sectionIndex} />
         </Fragment>
       ))}
       {/* Rodapé */}
@@ -197,6 +182,59 @@ const FAQ: [string, string][] = [
   ["O produto continuará recebendo melhorias?", "A proposta do período Fundador é utilizar o feedback dos primeiros usuários para continuar aprimorando a plataforma. As atualizações disponibilizadas durante seu período de acesso estarão incluídas."],
 ];
 
+
+
+function CopyContent({ blocks, hero = false }: { blocks: CopyBlock[]; hero?: boolean }) {
+  return <div className="space-y-4">{blocks.map((block, i) => {
+    const text = block.text ?? "";
+    if (block.kind === "heading") {
+      if (hero && i === 1) return <p key={i} className="text-base leading-relaxed text-muted-foreground sm:text-lg">{text}</p>;
+      if (text === "R$ 37,00") return <p key={i} className="text-5xl font-bold tracking-tight text-primary sm:text-6xl">{text}</p>;
+      const cls = block.level === 1 ? "text-2xl font-bold leading-tight tracking-tight sm:text-3xl" : block.level === 2 ? "text-lg font-semibold leading-relaxed sm:text-xl" : "text-base font-semibold text-primary";
+      return hero && i === 0 ? <h1 key={i} className="text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl lg:text-[44px]">{text}</h1> : block.level === 3 ? <h3 key={i} className={cls}>{text}</h3> : <h2 key={i} className={cls}>{text}</h2>;
+    }
+    if (block.kind === "cta") return <div key={i} className="pt-3"><CTA source={`layout-${text}`}>{text}</CTA></div>;
+    if (block.kind === "shot") return <Shot key={i} label={text} ratio="aspect-[16/9]" />;
+    if (block.kind === "list" || block.kind === "negative") return <ul key={i} className="space-y-3">{block.items?.map(item => block.kind === "negative" ? <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground"><X className="mt-1 h-4 w-4 shrink-0" />{item}</li> : <CheckItem key={item}>{item}</CheckItem>)}</ul>;
+    if (block.kind === "quote") return <blockquote key={i} className="rounded-xl border-l-4 border-primary bg-secondary px-5 py-4 font-semibold">{text}</blockquote>;
+    return <p key={i} className="text-sm leading-relaxed text-muted-foreground sm:text-base">{text}</p>;
+  })}</div>;
+}
+function splitCards(blocks: CopyBlock[]) {
+  const intro: CopyBlock[] = [], cards: CopyBlock[][] = [];
+  for (const block of blocks) {
+    if (block.kind === "heading" && block.level === 3) cards.push([block]);
+    else if (cards.length) cards[cards.length - 1].push(block);
+    else intro.push(block);
+  }
+  return { intro, cards };
+}
+function CopySection({ blocks, index }: { blocks: CopyBlock[]; index: number }) {
+  const box = "rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-6";
+  if (index === 0) return <Section id="topo"><div className="grid items-center gap-10 lg:grid-cols-2"><div><p className="mb-4 text-xs font-semibold tracking-widest text-primary">Dimensionador Expert</p><CopyContent hero blocks={blocks.filter(b => b.kind !== "shot")} /></div><div className="lg:pl-4"><CopyContent blocks={blocks.filter(b => b.kind === "shot")} /><div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs font-semibold text-muted-foreground"><span className="rounded-lg bg-secondary p-3">Cálculos</span><span className="rounded-lg bg-secondary p-3">Componentes</span><span className="rounded-lg bg-secondary p-3">Documentação</span></div></div></div></Section>;
+  if ([2,4,5,8].includes(index)) {
+    const { intro, cards } = splitCards(blocks);
+    let closing: CopyBlock[] = [];
+    if ((index === 2 || index === 5) && cards.length) {
+      const last = cards[cards.length - 1];
+      const end = last.findIndex(b => b.kind === "heading" && b.level === (index === 2 ? 1 : 2));
+      if (end >= 0) closing = last.splice(end);
+    }
+    return <Section id={index === 2 ? "pratica" : undefined} className={index % 2 ? "bg-secondary" : ""}><div className="mx-auto mb-8 max-w-3xl text-center"><CopyContent blocks={intro} /></div><div className={`grid gap-5 ${index === 5 || index === 4 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>{cards.map((group,i) => <div key={i} className={box}><CopyContent blocks={group} /></div>)}</div>{closing.length > 0 && <div className="mx-auto mt-8 max-w-3xl text-center"><CopyContent blocks={closing} /></div>}</Section>;
+  }
+  if (index === 7) {
+    const left = blocks.findIndex(b => b.text === "Sem o Dimensionador Expert"), right = blocks.findIndex(b => b.text === "Com o Dimensionador Expert");
+    const closing = blocks.findIndex((b,i) => i > right && b.kind === "heading" && b.level === 1);
+    return <Section className="bg-secondary"><div className="mb-8 text-center"><CopyContent blocks={blocks.slice(0,left)} /></div><div className="mx-auto grid max-w-4xl gap-5 md:grid-cols-2"><div className={box}><CopyContent blocks={blocks.slice(left,right)} /></div><div className={`${box} border-primary/30`}><CopyContent blocks={blocks.slice(right,closing)} /></div></div><div className="mx-auto mt-8 max-w-3xl text-center"><CopyContent blocks={blocks.slice(closing)} /></div></Section>;
+  }
+  if (index === 9) {
+    const start = blocks.findIndex(b => b.text === "Condição de lançamento");
+    return <Section id="oferta" className="bg-secondary"><div className="grid items-start gap-8 lg:grid-cols-2"><div className="lg:py-5"><CopyContent blocks={blocks.slice(0,start)} /></div><div className="rounded-3xl border-2 border-primary/25 bg-card p-7 shadow-soft sm:p-9"><CopyContent blocks={blocks.slice(start)} /></div></div></Section>;
+  }
+  if (index === 12) return <Section><div className="rounded-3xl border border-primary/20 bg-accent p-7 text-center sm:p-12"><div className="mx-auto max-w-3xl"><CopyContent blocks={blocks} /></div></div></Section>;
+  const shots = blocks.filter(b => b.kind === "shot"), text = blocks.filter(b => b.kind !== "shot");
+  return <Section className={index % 2 ? "bg-secondary" : ""}><div className={shots.length ? "grid items-center gap-8 lg:grid-cols-2" : "mx-auto max-w-3xl"}><CopyContent blocks={text} />{shots.length > 0 && <CopyContent blocks={shots} />}</div></Section>;
+}
 
 type CopyBlock = { kind: string; text?: string; level?: number; items?: string[] };
 const COPY_SECTIONS: CopyBlock[][] = [
