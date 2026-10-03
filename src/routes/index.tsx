@@ -599,7 +599,7 @@ function SalesPage() {
             <Heading
               eyebrow="Documentação"
               title="Transforme o dimensionamento em documentação profissional"
-              text="Depois do dimensionamento, organize as informações do projeto e gere documentação para consulta, arquivo ou apresentação profissional."
+              text="Depois do dimensionamento, consulte a memória de cálculo e gere o memorial descritivo e a proposta comercial com as informações do projeto. Imprima os documentos ou salve em PDF para consultar, arquivar ou apresentar ao cliente."
             />
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               {[
