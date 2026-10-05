@@ -871,3 +871,13 @@ body {
     transition: none;
   }
 }
+
+/* Recusa da OTO sobre o fechamento marinho da referência. */
+.oto-final .sales-payment-note,
+.oto-final .sales-decline {
+  color: var(--navy-foreground);
+  opacity: 0.85;
+}
+.oto-final .sales-decline:hover {
+  opacity: 1;
+}

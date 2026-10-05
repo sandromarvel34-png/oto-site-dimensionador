@@ -14,7 +14,15 @@ A página do repositório é o segundo upsell (oferta OTO complementar), apresen
 
 ## Componentes
 
-Todos os blocos usam `src/components/sales.tsx` e os componentes shadcn existentes.
+A página principal preserva a estrutura, a copy explicativa e as peças reutilizáveis da referência `https://site-dimensionador.lovable.app/` (`sandromarvel34-png/site-dimensionador`, commit `a12c159e0126e41f5a3e69b2d0f25fdf6497bfff`).
+
+- `Section`, `Heading`, `CheckItem` e `ProductMockup` preservam os componentes da referência, seus tokens e os estilos existentes.
+- `CTA` envolve `OfferDecision` para aceitar ou recusar a oferta. Header e barra mobile usam `PurchaseButton`.
+- Preservados: problema, solução, demonstração, funcionalidades, fabricantes, memória de cálculo, documentação, comparação, público, recursos incluídos e FAQ técnico.
+- Ajustes de texto limitados ao gancho inicial, preço de R$ 97 por R$ 37, condição OTO, botões de decisão e uma pergunta sobre a independência do curso.
+- O título comercial no card de oferta usa parágrafo destacado, mantendo um único H2 na seção.
+
+Componentes adicionais em `src/components/sales.tsx` atendem às decisões da OTO e à rota de agradecimento, junto dos componentes shadcn existentes.
 
 - `Brand`: logomarca AE preservada, nome e assinatura.
 - `SalesSection`: fundo claro, cinza ou marinho.
