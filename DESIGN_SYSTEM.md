@@ -1,6 +1,6 @@
 # Sistema de design — Dimensionador Expert OTO
 
-A página do repositório é o downsell após a recusa do curso de R$ 197,00, dentro do funil Livro → Curso → Dimensionador. Não altera as páginas ou o checkout dos outros produtos.
+A página do repositório é o segundo upsell (oferta OTO complementar), apresentado a todos os compradores do livro depois da oferta do curso de R$ 197,00, tenham comprado o curso ou não. Funil: Livro → Curso (aceitar ou recusar) → Dimensionador → Agradecimento. Não altera as páginas ou o checkout dos outros produtos.
 
 ## Tokens e tipografia
 
@@ -22,7 +22,7 @@ Todos os blocos usam `src/components/sales.tsx` e os componentes shadcn existent
 - `CheckList`: listas com Lucide Check. `BenefitCard`: ícone de linha, título H3 e benefício.
 - `Price`: de R$ 97,00 por R$ 37,00, economia R$ 60,00 e 6 meses. Valores centralizados em `OFFER`.
 - `PurchaseButton`: CTA âmbar; checkout válido em HTTPS; diálogo de indisponibilidade se não configurado.
-- `OfferDecision`: aceitar a oferta, informar compra adicional opcional e recusar de forma clara.
+- `OfferDecision`: aceitar a oferta, informar compra adicional opcional e recusar de forma clara. A recusa usa “Não, quero concluir minha compra”, sem presumir que o cliente recusou o curso.
 - `ProductPreview`: captura real existente, sem dados novos ou depoimentos inventados.
 - `VideoDemo`: vídeo original, carregado após clique, sem reprodução automática ao abrir a página.
 
@@ -33,6 +33,6 @@ Todos os blocos usam `src/components/sales.tsx` e os componentes shadcn existent
 - `InitiateCheckout` somente ao abrir destino válido. Recusa usa evento personalizado; nunca registra Purchase na página de oferta ou agradecimento.
 - Termos, privacidade, suporte e PDF preservados em `site-config.ts`; continuam condicionais quando vazios.
 - Sem timer, vagas fictícias, confirmação de pagamento sem validação ou promessa de cobrar em um clique.
-- O gateway precisa direcionar a recusa do curso para esta página. Editar este repositório não configura o funil no gateway.
-- Página e agradecimento usam noindex para não promover o downsell como página pública de aquisição.
+- O gateway precisa direcionar tanto a compra confirmada do curso quanto a recusa do curso para esta página. Editar este repositório não configura o funil no gateway.
+- Página e agradecimento usam noindex para não promover a oferta OTO como página pública de aquisição.
 - Foco visível, alt nas imagens, nomes acessíveis, preferência por movimento reduzido e layout sem barra fixa que esconda a recusa.

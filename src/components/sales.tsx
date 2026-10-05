@@ -127,11 +127,11 @@ export function PurchaseButton({ source, compact = false }: { source: string; co
             <DialogTitle>Oferta indisponível no momento</DialogTitle>
             <DialogDescription>
               Não foi possível abrir a compra desta oferta. Tente novamente mais tarde ou continue
-              apenas com o livro.
+              sem o Dimensionador.
             </DialogDescription>
           </DialogHeader>
           <Button variant="outline" onClick={() => declineOffer(source)}>
-            Continuar apenas com o livro
+            Continuar sem o Dimensionador
           </Button>
         </DialogContent>
       </Dialog>
@@ -147,7 +147,7 @@ export function OfferDecision({ source }: { source: string }) {
         <ShieldCheck aria-hidden="true" /> Compra adicional e opcional · Sem renovação automática
       </p>
       <button type="button" className="sales-decline" onClick={() => declineOffer(source)}>
-        Não, quero continuar apenas com o livro
+        Não, quero concluir minha compra
       </button>
     </div>
   );

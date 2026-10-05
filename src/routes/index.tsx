@@ -50,10 +50,10 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: DownsellPage,
+  component: OtoPage,
 });
 
-function DownsellPage() {
+function OtoPage() {
   return (
     <div className="sales-page">
       <header className="sales-header">
@@ -75,21 +75,24 @@ function DownsellPage() {
       <section id="topo" className="sales-hero">
         <div className="sales-container sales-hero-grid">
           <div>
-            <p className="sales-eyebrow">Um complemento prático ao seu Livro Comandos Elétricos</p>
+            <p className="sales-eyebrow">
+              Antes de concluir, uma oferta especial para complementar seu livro
+            </p>
             <h1>
-              Seu livro ensina.
-              <br />O Dimensionador <span>facilita a aplicação.</span>
+              Você já garantiu o livro.
+              <br />
+              Agora, <span>facilite seus dimensionamentos.</span>
             </h1>
             <p className="sales-hero-lead">
-              Informe os dados do motor e da instalação. Receba o dimensionamento dos cabos,
-              disjuntores, contatores e relés em um só lugar.
+              No livro, você aprende os critérios. Com o Dimensionador Expert, informa os dados do
+              motor e da instalação e recebe os cálculos, os cabos e os dispositivos dimensionados.
             </p>
             <p className="sales-hero-description">
-              Acrescente o Dimensionador Expert à sua compra e use uma ferramenta online para fazer
-              os cálculos, consultar os resultados e preparar os documentos do serviço.
+              Leve também a ferramenta que organiza o dimensionamento dos cabos, disjuntores,
+              contatores e relés e ajuda a preparar os documentos do serviço.
             </p>
             <Price compact />
-            <OfferDecision source="hero-downsell" />
+            <OfferDecision source="hero-oto" />
           </div>
           <div>
             <ProductPreview />
@@ -193,7 +196,7 @@ function DownsellPage() {
         </SectionHeading>
         <VideoDemo />
         <div className="sales-inline-action">
-          <PurchaseButton source="demo-downsell" />
+          <PurchaseButton source="demo-oto" />
         </div>
       </SalesSection>
 
@@ -232,7 +235,7 @@ function DownsellPage() {
               <br />
               Sem mensalidade e sem renovação automática.
             </p>
-            <OfferDecision source="oferta-downsell" />
+            <OfferDecision source="oferta-oto" />
             <p className="sales-offer-footnote">
               O Dimensionador é uma compra adicional. O livro e seus bônus são os itens da sua
               compra principal.
@@ -260,7 +263,7 @@ function DownsellPage() {
           <p>
             De <s>R$ 97,00</s> por <strong>R$ 37,00</strong> · 6 meses de acesso
           </p>
-          <OfferDecision source="final-downsell" />
+          <OfferDecision source="final-oto" />
         </div>
       </SalesSection>
 
@@ -303,8 +306,8 @@ const FAQ: [string, string][] = [
     "Não. É uma ferramenta adicional, oferecida separadamente por R$ 37,00 com 6 meses de acesso. O livro e os bônus da compra principal são os itens que você já escolheu.",
   ],
   [
-    "Preciso comprar o curso de R$ 197 para usar?",
-    "Não. O acesso ao Dimensionador Expert é independente do curso. Você pode escolher apenas o livro e a ferramenta.",
+    "Posso usar o Dimensionador com ou sem o curso?",
+    "Sim. O Dimensionador é uma ferramenta adicional com acesso independente. Você pode aproveitar esta oferta tanto se comprou o curso quanto se decidiu ficar apenas com o livro.",
   ],
   [
     "Por quanto tempo posso usar? Haverá mensalidade?",
