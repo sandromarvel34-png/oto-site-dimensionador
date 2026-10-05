@@ -378,8 +378,7 @@ function SalesPage() {
           </div>
         </div>
         <p className="mt-10 rounded-2xl border border-primary/20 bg-card p-6 text-center text-xl font-semibold text-foreground sm:text-2xl">
-          O Dimensionador Expert faz os cálculos e reúne o dimensionamento e as indicações de
-          modelos para apoiar essas escolhas.
+          Com o Dimensionador Expert, você não precisa fazer esses cálculos manualmente.
         </p>
       </Section>
 
@@ -501,7 +500,7 @@ function SalesPage() {
             <div className={iconBox}>
               <Cable className="h-5 w-5" />
             </div>
-            <h3 className="mt-4 font-semibold">Seção dos cabos</h3>
+            <h3 className="mt-4 font-semibold">Seção transversal dos cabos</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
               Saiba qual bitola utilizar, considerando a corrente, o método de instalação, a
               temperatura, o agrupamento e a queda de tensão.
