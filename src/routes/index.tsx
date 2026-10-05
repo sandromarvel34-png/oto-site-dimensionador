@@ -4,26 +4,17 @@ import {
   Zap,
   ArrowRight,
   Play,
-  Table2,
-  RefreshCcw,
   Search,
   FileText,
   Check,
-  X,
-  Cpu,
   Cable,
   ShieldCheck,
-  Activity,
-  Gauge,
   ListChecks,
   History,
-  BookOpen,
   Wrench,
   GraduationCap,
   HardHat,
   Ruler,
-  FolderOpen,
-  Sparkles,
   Info,
   Monitor,
   Smartphone,
@@ -306,11 +297,15 @@ function SalesPage() {
               <Zap className="h-3.5 w-3.5" /> DIMENSIONADOR EXPERT
             </p>
             <h1 className="mt-5 text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
-              Dimensione comandos elétricos com mais rapidez e profissionalismo.
+              Não sabe como dimensionar os cabos e dispositivos para instalar um motor?
             </h1>
-            <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Calcule condutores, proteções e componentes, consulte opções de fabricantes e gere a
-              documentação do seu dimensionamento em poucos minutos.
+            <p className="mt-5 text-xl font-semibold leading-relaxed sm:text-2xl">
+              Receba o dimensionamento pronto, sem precisar fazer os cálculos.
+            </p>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+              Informe os dados do motor e da instalação. O Dimensionador Expert calcula a seção dos
+              cabos, dimensiona disjuntores, contatores e relés e indica modelos de WEG, Siemens e
+              Schneider para você escolher.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <CTA source="hero">Quero acessar o Dimensionador Expert</CTA>
@@ -318,11 +313,11 @@ function SalesPage() {
                 onClick={scrollToVideo}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 py-4 font-semibold transition hover:bg-secondary sm:w-auto"
               >
-                <Play className="h-4 w-4 text-primary" /> Ver como funciona
+                <Play className="h-4 w-4 text-primary" /> Ver o dimensionamento na prática
               </button>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
-              6 meses de acesso • Pagamento único de R$37 • Sem mensalidade
+              6 meses de acesso por R$37 • Pagamento único • Sem mensalidade
             </p>
             <p className="mt-6 flex items-start gap-2 text-xs leading-relaxed text-muted-foreground">
               <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
@@ -340,45 +335,51 @@ function SalesPage() {
       {/* 2 — PROBLEMA */}
       <Section className="bg-secondary">
         <Heading
-          title="Quanto tempo você perde conferindo tabelas, cálculos e componentes?"
-          text={
-            <>
-              <p>
-                Dimensionar um comando elétrico envolve muito mais do que descobrir a corrente do
-                motor.
-              </p>
-              <p>
-                É preciso analisar dados da carga, instalação, condutor, proteção, queda de tensão,
-                dispositivo de comando e compatibilidade dos componentes.
-              </p>
-              <p>
-                E quando essas informações ficam espalhadas entre tabelas, catálogos, calculadoras e
-                anotações, o trabalho se torna mais lento e sujeito a retrabalho.
-              </p>
-            </>
-          }
+          title="Na hora de instalar o motor, você sabe qual cabo, disjuntor, contator e relé escolher?"
+          text="Você identifica o motor, a tensão de alimentação, a chave de partida e a distância da instalação. Mas ainda precisa transformar essas informações no dimensionamento dos cabos e dispositivos."
         />
+        <p className="mt-5 text-lg font-semibold">É nessa etapa que surgem as dúvidas:</p>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            [Table2, "Consultando tabelas e catálogos"],
-            [RefreshCcw, "Refazendo cálculos"],
-            [Search, "Procurando componentes compatíveis"],
-            [FileText, "Montando documentação manualmente"],
-          ].map(([I, t]) => {
-            const Icon = I as typeof Table2;
-            return (
-              <div key={t as string} className={card}>
-                <div className={iconBox}>
-                  <Icon className="h-5 w-5" />
-                </div>
-                <p className="mt-4 font-semibold">{t as string}</p>
-              </div>
-            );
-          })}
+          <div className={card}>
+            <div className={iconBox}>
+              <Cable className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Qual bitola de cabo utilizar?</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              É preciso considerar a corrente, as condições de instalação e a queda de tensão.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Qual disjuntor selecionar?</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              A proteção precisa ser adequada ao circuito e às características da partida.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <Wrench className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Qual contator e relé escolher?</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              A corrente e o tipo de acionamento influenciam a seleção.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <Search className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Qual modelo comprar?</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Depois de dimensionar, ainda é necessário encontrar as referências dos fabricantes.
+            </p>
+          </div>
         </div>
-        <p className="mt-12 rounded-2xl border border-primary/20 bg-card p-6 text-center text-xl font-semibold text-foreground sm:text-2xl">
-          O Dimensionador Expert reúne esse processo em{" "}
-          <span className="text-primary">um único ambiente.</span>
+        <p className="mt-10 rounded-2xl border border-primary/20 bg-card p-6 text-center text-xl font-semibold text-foreground sm:text-2xl">
+          O Dimensionador Expert faz os cálculos e reúne o dimensionamento e as indicações de
+          modelos para apoiar essas escolhas.
         </p>
       </Section>
 
@@ -388,35 +389,53 @@ function SalesPage() {
           center
           eyebrow="A solução"
           title="Conheça o Dimensionador Expert"
-          text="Uma ferramenta desenvolvida para auxiliar profissionais e estudantes da área elétrica a realizar dimensionamentos de forma mais rápida, organizada e padronizada."
+          text="Uma ferramenta online que faz os cálculos, dimensiona os cabos e dispositivos para instalações de motores e indica modelos de WEG, Siemens e Schneider para você escolher."
         />
-        <ol className="mt-12 grid gap-4 md:grid-cols-5">
+        <ol className="mt-12 grid gap-6 md:grid-cols-3">
           {[
-            "Informe os dados",
-            "Execute o dimensionamento",
-            "Analise os resultados",
-            "Consulte os componentes",
-            "Gere sua documentação",
-          ].map((s, i) => (
-            <li key={s} className="flex flex-col gap-3">
-              <div className="flex items-center gap-3">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-                  {i + 1}
-                </span>
-                <span className="font-semibold">{s}</span>
-              </div>
+            [
+              "Informe o motor e as condições da instalação",
+              "Preencha os dados do motor ou selecione um modelo do catálogo WEG. Informe a tensão, a chave de partida, a distância e as condições de instalação dos condutores.",
+            ],
+            [
+              "Receba o dimensionamento",
+              "A ferramenta calcula as correntes, determina a seção dos cabos, verifica a queda de tensão e dimensiona os dispositivos de proteção e comando conforme os dados informados.",
+            ],
+            [
+              "Escolha entre as indicações dos fabricantes",
+              "Veja os modelos indicados de WEG, Siemens e Schneider e escolha qual fabricante utilizar.",
+            ],
+          ].map(([title, text], i) => (
+            <li key={title} className="rounded-2xl border border-border bg-card p-6">
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                {i + 1}
+              </span>
+              <h3 className="mt-4 font-semibold">{title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
             </li>
           ))}
         </ol>
+        <p className="mx-auto mt-8 max-w-3xl text-center text-muted-foreground">
+          Você recebe os resultados organizados para selecionar os cabos e dispositivos, sem
+          precisar fazer os cálculos manualmente.
+        </p>
+        <div className="mt-6 flex justify-center">
+          <button
+            onClick={scrollToVideo}
+            className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-6 py-4 font-semibold transition hover:bg-secondary"
+          >
+            <Play className="h-4 w-4 text-primary" />
+            Ver o dimensionamento na prática
+          </button>
+        </div>
       </Section>
-
       {/* 4 — VÍDEO */}
       <Section id="video" className="bg-secondary">
         <Heading
           center
           eyebrow="Demonstração"
-          title="Veja o Dimensionador Expert funcionando"
-          text="Antes de comprar, veja um dimensionamento sendo realizado do início ao fim."
+          title="Veja o Dimensionador Expert fazendo o dimensionamento na prática."
+          text="Acompanhe o preenchimento dos dados do motor e da instalação e veja como a ferramenta apresenta a seção dos cabos, os dispositivos dimensionados e as indicações dos fabricantes."
         />
         <div className="mx-auto mt-10 max-w-4xl overflow-hidden rounded-2xl border border-border bg-navy shadow-soft">
           <div className="relative aspect-video">
@@ -463,94 +482,97 @@ function SalesPage() {
           </div>
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-center text-muted-foreground">
-          Assista à demonstração para conhecer o Dimensionador Expert na prática.
+          Dos dados informados aos resultados: veja o que você recebe antes de comprar.
         </p>
         <div className="mt-8 flex justify-center">
           <CTA source="video">Quero acessar por R$37</CTA>
         </div>
       </Section>
 
-      {/* 5 — FUNCIONALIDADES */}
+      {/* 5 — FUNCIONALIDADES E ENTREGAS */}
       <Section>
-        <Heading eyebrow="Funcionalidades" title="Do dado do motor ao resultado final" />
-        <div className="mt-10">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              [Cpu, "Dados do motor"],
-              [Activity, "Corrente nominal"],
-              [Gauge, "Corrente de projeto"],
-              [Cable, "Dimensionamento de condutores"],
-              [Ruler, "Verificação de queda de tensão"],
-              [ShieldCheck, "Dispositivos de proteção"],
-              [Zap, "Contatores"],
-              [Wrench, "Relés"],
-              [Search, "Componentes compatíveis"],
-              [BookOpen, "Memória de cálculo"],
-              [History, "Histórico de dimensionamentos"],
-              [FileText, "Geração de documentação"],
-            ].map(([I, t]) => {
-              const Icon = I as typeof Zap;
-              return (
-                <div
-                  key={t as string}
-                  className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition hover:border-primary/40"
-                >
-                  <Icon className="h-4 w-4 shrink-0 text-primary" />
-                  <span className="text-sm font-medium">{t as string}</span>
-                </div>
-              );
-            })}
+        <Heading
+          eyebrow="Funcionalidades"
+          title="O dimensionamento que você precisa para selecionar os cabos e dispositivos."
+          text="Com os dados do motor e da instalação, o Dimensionador Expert entrega os resultados organizados para apoiar a escolha dos materiais."
+        />
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className={card}>
+            <div className={iconBox}>
+              <Cable className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Seção dos cabos</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Saiba qual bitola utilizar, considerando a corrente, o método de instalação, a
+              temperatura, o agrupamento e a queda de tensão.
+            </p>
           </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Disjuntores de proteção</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Receba o dimensionamento dos disjuntores dos circuitos de força e comando e, quando
+              aplicável, do disjuntor-motor.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <Wrench className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Contatores e relés</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Veja os requisitos dos contatores e relés conforme as características do motor e o
+              tipo de partida escolhido.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <Search className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Indicações dos fabricantes</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Receba indicações de modelos de WEG, Siemens e Schneider para escolher qual fabricante
+              utilizar.
+            </p>
+          </div>
+        </div>
+        <div className="mt-6 grid gap-5 rounded-2xl border border-primary/20 bg-accent p-6 md:grid-cols-2 sm:p-8">
+          <div>
+            <FileText className="h-6 w-6 text-primary" />
+            <h3 className="mt-3 font-semibold">Documentos para imprimir ou salvar em PDF</h3>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              Além dos resultados, você tem acesso à memória de cálculo e pode gerar o memorial
+              descritivo e a proposta comercial com a lista de materiais. Imprima os documentos
+              diretamente ou escolha “Salvar como PDF” na janela de impressão.
+            </p>
+          </div>
+          <div>
+            <History className="h-6 w-6 text-primary" />
+            <h3 className="mt-3 font-semibold">Seus dados e projetos salvos</h3>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              Retome dimensionamentos e propostas pelo histórico. Cadastre seus dados profissionais
+              e sua logomarca uma vez e reutilize nas próximas propostas e memoriais.
+            </p>
+          </div>
+        </div>
+        <div className="mt-8 flex justify-center">
+          <CTA source="funcionalidades">Quero dimensionar minha instalação</CTA>
         </div>
       </Section>
 
-      {/* 6 — RESULTADO */}
+      {/* 6 — FABRICANTES */}
       <Section className="bg-secondary">
         <Heading
-          center
-          eyebrow="Resultado"
-          title="Não receba apenas um número. Veja como o dimensionamento foi construído."
+          eyebrow="Indicações dos fabricantes"
+          title="A ferramenta indica os modelos. Você escolhe o fabricante."
+          text="Depois de dimensionar os dispositivos, o Dimensionador Expert apresenta indicações de WEG, Siemens e Schneider, organizadas por componente."
         />
-        <div className="mx-auto mt-10 max-w-4xl">
-          <div>
-            <div className="flex flex-wrap gap-2">
-              {[
-                "Condutor recomendado",
-                "Corrente nominal",
-                "Corrente de projeto",
-                "Proteção",
-                "Contator",
-                "Relé",
-                "Queda de tensão",
-                "Critérios utilizados",
-              ].map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-border bg-card px-3 py-1.5 text-sm font-medium"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-            <p className="mt-6 text-lg font-semibold">O objetivo não é esconder o cálculo.</p>
-            <p className="mt-2 text-muted-foreground">
-              O Dimensionador Expert apresenta os resultados de forma organizada para que você possa
-              consultar os critérios considerados no dimensionamento.
-            </p>
-            <div className="mt-8">
-              <CTA source="resultado">Quero dimensionar meus projetos</CTA>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* 7 — FABRICANTES */}
-      <Section>
-        <Heading
-          eyebrow="Componentes"
-          title="Encontre componentes compatíveis sem ficar procurando catálogo por catálogo"
-          text="A partir das características do dimensionamento, o sistema apresenta opções de componentes compatíveis disponíveis no catálogo interno da ferramenta."
-        />
+        <p className="mt-4 max-w-3xl text-muted-foreground">
+          Você vê a referência indicada e as características apresentadas pela ferramenta para
+          escolher qual marca utilizar na instalação.
+        </p>
         <div className="mt-8 grid grid-cols-3 gap-3 sm:max-w-xl">
           {["WEG", "SIEMENS", "SCHNEIDER"].map((m) => (
             <div
@@ -563,167 +585,221 @@ function SalesPage() {
         </div>
         <p className="mt-6 flex items-start gap-2 text-sm text-muted-foreground">
           <Info className="mt-0.5 h-4 w-4 shrink-0" />
-          As referências devem ser verificadas pelo profissional antes da especificação final e
-          aquisição.
+          Antes da compra, confira a configuração final do dispositivo, incluindo tensão da bobina,
+          capacidade de interrupção e compatibilidade de montagem, conforme aplicável.
         </p>
       </Section>
 
-      {/* 8 — MEMÓRIA DE CÁLCULO */}
+      {/* 7 — MEMÓRIA DE CÁLCULO */}
+      <Section>
+        <div className="mx-auto max-w-4xl">
+          <Heading
+            eyebrow="Memória de cálculo"
+            title="O resultado vem acompanhado dos cálculos."
+            text="Você não precisa fazer os cálculos manualmente, mas pode acompanhar como a ferramenta chegou ao dimensionamento."
+          />
+          <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+            A memória de cálculo apresenta as fórmulas, os valores utilizados e as etapas de cálculo
+            da corrente, da capacidade dos condutores e da queda de tensão.
+          </p>
+          <div className="mt-6 rounded-2xl border border-border bg-secondary p-6">
+            <p className="font-semibold">
+              Confira os critérios utilizados no seu projeto ou use a explicação para estudar e
+              revisar conceitos.
+            </p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              Imprima a memória de cálculo ou salve em PDF pela janela de impressão.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* 8 — DOCUMENTAÇÃO */}
       <Section className="bg-secondary">
-        <div className="mx-auto max-w-4xl">
-          <div className="space-y-6">
-            <Heading
-              eyebrow="Memória de cálculo"
-              title="Quer entender o resultado? Veja o cálculo."
-              text="Além do resultado, o Dimensionador Expert permite consultar como determinados valores foram obtidos, tornando a ferramenta útil também para:"
-            />
-            <ul className="mt-6 space-y-3">
-              {[
-                "Estudantes",
-                "Técnicos",
-                "Profissionais em formação",
-                "Revisão de conceitos",
-                "Conferência de dimensionamentos",
-              ].map((t) => (
-                <CheckItem key={t}>{t}</CheckItem>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </Section>
-
-      {/* 9 — PDF */}
-      <Section>
-        <div className="mx-auto max-w-4xl">
-          <div>
-            <Heading
-              eyebrow="Documentação"
-              title="Transforme o dimensionamento em documentação profissional"
-              text="Depois do dimensionamento, consulte a memória de cálculo e gere o memorial descritivo e a proposta comercial com as informações do projeto. Imprima os documentos ou salve em PDF para consultar, arquivar ou apresentar ao cliente."
-            />
-            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-              {[
-                "Dados do projeto",
-                "Informações da carga",
-                "Resultados",
-                "Componentes",
-                "Critérios utilizados",
-                "Informações profissionais",
-              ].map((t) => (
-                <CheckItem key={t}>{t}</CheckItem>
-              ))}
-            </ul>
-            {PDF_EXAMPLE_URL && (
-              <a
-                href={PDF_EXAMPLE_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 py-3.5 font-semibold transition hover:bg-secondary sm:w-auto"
-              >
-                <FileText className="h-4 w-4 text-primary" /> Ver exemplo do PDF
-              </a>
-            )}
-          </div>
-        </div>
-      </Section>
-
-      {/* 10 — BENEFÍCIO */}
-      <section className="bg-navy px-5 py-20 text-navy-foreground sm:py-24">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="mx-auto max-w-3xl text-center text-2xl font-bold tracking-tight sm:text-4xl">
-            Menos tempo procurando. Mais tempo executando.
-          </h2>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {[
-              [
-                Zap,
-                "Agilidade",
-                "Centralize informações que normalmente estariam espalhadas entre cálculos, tabelas e catálogos.",
-              ],
-              [
-                FolderOpen,
-                "Organização",
-                "Mantenha os dimensionamentos e resultados reunidos em um único ambiente.",
-              ],
-              [
-                Sparkles,
-                "Profissionalismo",
-                "Gere resultados e documentação com apresentação mais organizada.",
-              ],
-            ].map(([I, t, d]) => {
-              const Icon = I as typeof Zap;
-              return (
-                <div
-                  key={t as string}
-                  className="rounded-2xl border border-navy-foreground/15 bg-navy-foreground/5 p-7"
-                >
-                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-primary text-primary-foreground">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <h3 className="mt-5 text-lg font-semibold">{t as string}</h3>
-                  <p className="mt-2 leading-relaxed text-navy-foreground/75">{d as string}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 11 — PARA QUEM */}
-      <Section>
-        <Heading center title="Para quem é o Dimensionador Expert?" />
+        <Heading
+          eyebrow="Documentação"
+          title="Aproveite o dimensionamento para preparar os documentos do serviço."
+          text="Use os dados e resultados do projeto para gerar os documentos, sem começar tudo do zero."
+        />
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className={card}>
+            <div className={iconBox}>
+              <ListChecks className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Proposta comercial com lista de materiais</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              A ferramenta reúne os condutores e componentes na proposta. Revise as quantidades,
+              preencha os preços e acrescente os serviços para apresentar o orçamento ao cliente.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <FileText className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Memorial descritivo</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Gere um documento técnico com as informações do motor, da instalação e do serviço,
+              separado dos valores comerciais.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <HardHat className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Com sua identidade profissional</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Cadastre seus dados e sua logomarca uma vez e reutilize nas próximas propostas e
+              memoriais.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <Download className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Imprima ou salve em PDF</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Abra a impressão do documento e escolha imprimir ou salvar em PDF. As propostas ficam
+              salvas na conta para consultar e editar depois.
+            </p>
+          </div>
+        </div>
+        {PDF_EXAMPLE_URL && (
+          <a
+            href={PDF_EXAMPLE_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-8 inline-flex items-center gap-2 rounded-xl border border-border bg-card px-6 py-3.5 font-semibold transition hover:bg-secondary"
+          >
+            <FileText className="h-4 w-4 text-primary" />
+            Ver exemplo do PDF
+          </a>
+        )}
+      </Section>
+
+      {/* 9 — COMPARAÇÃO */}
+      <Section>
+        <Heading
+          center
+          eyebrow="Sem e com"
+          title="Do cálculo manual ao dimensionamento organizado."
+        />
+        <div className="mx-auto mt-10 max-w-4xl overflow-hidden rounded-2xl border border-border">
+          <div className="hidden grid-cols-2 md:grid">
+            <h3 className="bg-secondary p-5 font-semibold text-muted-foreground">
+              Sem o Dimensionador Expert
+            </h3>
+            <h3 className="bg-accent p-5 font-semibold text-primary">Com o Dimensionador Expert</h3>
+          </div>
           {[
             [
-              HardHat,
-              "Eletricistas",
-              "Que desejam agilizar dimensionamentos e consultas durante projetos e serviços.",
+              "Calcular as correntes manualmente.",
+              "Receber as correntes calculadas a partir dos dados informados.",
             ],
             [
-              Wrench,
-              "Técnicos em eletrotécnica",
-              "Que trabalham com motores, comandos, instalações e projetos elétricos.",
+              "Cruzar tabelas e cálculos para definir a bitola.",
+              "Receber a seção dos cabos e a verificação da queda de tensão.",
             ],
             [
-              Ruler,
-              "Engenheiros e projetistas",
-              "Como ferramenta complementar de apoio a cálculos e especificações.",
+              "Dimensionar separadamente disjuntores, contatores e relés.",
+              "Receber os requisitos dos dispositivos conforme o motor e a partida.",
             ],
             [
-              GraduationCap,
-              "Estudantes",
-              "Para acompanhar cálculos e compreender melhor o processo de dimensionamento.",
+              "Procurar referências nos catálogos dos fabricantes.",
+              "Ver as indicações organizadas por WEG, Siemens e Schneider.",
             ],
-          ].map(([I, t, d]) => {
-            const Icon = I as typeof Zap;
-            return (
-              <div key={t as string} className={card}>
-                <div className={iconBox}>
-                  <Icon className="h-5 w-5" />
-                </div>
-                <h3 className="mt-4 font-semibold">{t as string}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d as string}</p>
+            [
+              "Montar os documentos a partir de anotações.",
+              "Aproveitar os dados do projeto na proposta e no memorial.",
+            ],
+          ].map(([without, withTool]) => (
+            <div key={without} className="grid border-t border-border md:grid-cols-2">
+              <div className="bg-secondary p-5">
+                <span className="mb-2 block text-xs font-semibold text-muted-foreground md:hidden">
+                  SEM O DIMENSIONADOR
+                </span>
+                <p className="text-sm leading-relaxed text-muted-foreground">{without}</p>
               </div>
-            );
-          })}
+              <div className="bg-accent p-5">
+                <span className="mb-2 block text-xs font-semibold text-primary md:hidden">
+                  COM O DIMENSIONADOR EXPERT
+                </span>
+                <p className="text-sm leading-relaxed">{withTool}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="mx-auto mt-8 max-w-3xl text-center text-muted-foreground">
+          Você informa os dados da instalação. A ferramenta reúne os cálculos, o dimensionamento e
+          as indicações dos dispositivos em um único ambiente.
+        </p>
+        <div className="mt-6 flex justify-center">
+          <CTA source="comparacao">Quero acessar por R$37</CTA>
         </div>
       </Section>
 
-      {/* 12 + 13 — O QUE RECEBE + OFERTA */}
-      <Section id="oferta" className="bg-secondary">
+      {/* 10 — PARA QUEM */}
+      <Section className="bg-secondary">
+        <Heading center title="Para quem é o Dimensionador Expert?" />
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className={card}>
+            <div className={iconBox}>
+              <HardHat className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Eletricistas e instaladores</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Para quem precisa selecionar os cabos e dispositivos na instalação de motores e
+              montagem de painéis de comando, sem fazer cada cálculo manualmente.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <Wrench className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Técnicos em eletrotécnica e manutenção</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Para apoiar o dimensionamento e a seleção de proteções, contatores e relés conforme o
+              motor e a partida.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <Ruler className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Engenheiros e projetistas</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Para agilizar os cálculos e organizar resultados, referências de componentes e
+              documentos do projeto.
+            </p>
+          </div>
+          <div className={card}>
+            <div className={iconBox}>
+              <GraduationCap className="h-5 w-5" />
+            </div>
+            <h3 className="mt-4 font-semibold">Estudantes da área elétrica</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Para acompanhar o dimensionamento passo a passo e entender as fórmulas e os critérios
+              utilizados.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* 11 — ENTREGA E OFERTA */}
+      <Section id="oferta">
         <div className="grid items-start gap-10 lg:grid-cols-2">
           <div>
-            <Heading title="Ao liberar seu acesso, você recebe:" />
+            <Heading title="Tudo isso incluído no seu acesso ao Dimensionador Expert." />
             <ul className="mt-8 space-y-4">
               {[
-                "6 meses de acesso ao Dimensionador Expert",
-                "Uso da plataforma online",
-                "Dimensionamentos durante o período contratado",
-                "Histórico de projetos",
-                "Memória dos cálculos disponíveis no sistema",
-                "Consulta aos componentes disponíveis na ferramenta",
-                "Geração de documentação",
-                "Atualizações disponibilizadas durante o período de acesso",
+                "Dimensionamento dos condutores, com verificação da queda de tensão e das condições de instalação.",
+                "Dimensionamento dos dispositivos de proteção e comando, conforme o motor e a partida.",
+                "Indicações de modelos de WEG, Siemens e Schneider para escolher o fabricante.",
+                "Memória de cálculo com fórmulas, valores e etapas.",
+                "Proposta comercial com lista de materiais para revisar quantidades, preencher preços e incluir serviços.",
+                "Memorial descritivo com as informações técnicas do projeto.",
+                "Impressão ou salvamento em PDF dos documentos.",
+                "Histórico de dimensionamentos e propostas para retomar seu trabalho.",
+                "Dados profissionais e logomarca reutilizáveis nas propostas e memoriais.",
               ].map((t) => (
                 <CheckItem key={t}>{t}</CheckItem>
               ))}
@@ -733,10 +809,9 @@ function SalesPage() {
             <span className="inline-block rounded-full bg-accent px-3 py-1 text-xs font-semibold tracking-[0.1em] text-accent-foreground">
               CONDIÇÃO DE LANÇAMENTO
             </span>
-            <h2 className="mt-4 text-2xl font-bold sm:text-3xl">Acesso Fundador</h2>
+            <h2 className="mt-4 text-2xl font-bold sm:text-3xl">6 meses de acesso por R$37</h2>
             <p className="mt-3 text-muted-foreground">
-              Estamos formando o primeiro grupo de usuários do Dimensionador Expert. Por isso, neste
-              momento você pode liberar 6 meses de acesso através de um único pagamento.
+              Use a ferramenta online pelo computador, tablet ou celular, sem instalar programas.
             </p>
             <div className="mt-8 border-t border-border pt-8">
               <p className="text-sm font-semibold tracking-[0.1em] text-primary">
@@ -745,123 +820,38 @@ function SalesPage() {
               <p className="mt-2 text-5xl font-bold tracking-tight">
                 R$ 37<span className="text-3xl">,00</span>
               </p>
-              <ul className="mt-4 space-y-1 text-sm text-muted-foreground">
-                <li>Pagamento único.</li>
-                <li>Sem mensalidade.</li>
-                <li>Sem renovação automática durante os 6 meses contratados.</li>
-              </ul>
+              <p className="mt-4 text-sm text-muted-foreground">
+                Pagamento único, sem mensalidade e sem renovação automática.
+              </p>
             </div>
             <CTA source="oferta" className="mt-8 sm:w-full">
-              Liberar meu acesso agora
+              Quero acessar por R$37
             </CTA>
             <p className="mt-3 text-center text-xs text-muted-foreground">
               Acesso válido por 6 meses a partir da ativação.
             </p>
-          </div>
-        </div>
-      </Section>
-
-      {/* 14 — COMPARAÇÃO */}
-      <Section>
-        <Heading
-          center
-          title="Quanto vale economizar tempo em cada novo dimensionamento?"
-          text={
-            <>
-              <p>Você não está comprando apenas acesso a uma calculadora.</p>
-              <p>
-                Está utilizando uma ferramenta criada para reunir etapas do processo de
-                dimensionamento, consulta e documentação em um único ambiente.
+            <div className="mt-8 border-t border-border pt-6">
+              <h3 className="font-semibold">
+                Uma condição de lançamento para os primeiros usuários.
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                O Dimensionador Expert está formando seu primeiro grupo de usuários. Nesta fase,
+                você pode utilizar a ferramenta por 6 meses com um pagamento único de R$37.
               </p>
-            </>
-          }
-        />
-        <div className="mx-auto mt-10 grid max-w-4xl gap-4 md:grid-cols-2">
-          <div className="rounded-2xl border border-border bg-secondary p-7">
-            <h3 className="font-semibold text-muted-foreground">Sem Dimensionador</h3>
-            <ul className="mt-5 space-y-3">
-              {[
-                "Consultas separadas",
-                "Cálculos em diferentes ferramentas",
-                "Busca manual em catálogos",
-                "Documentação montada manualmente",
-              ].map((t) => (
-                <li key={t} className="flex items-center gap-3 text-muted-foreground">
-                  <X className="h-4 w-4 shrink-0" />
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-2xl border border-primary/30 bg-accent p-7 shadow-soft">
-            <h3 className="font-semibold text-primary">Com Dimensionador Expert</h3>
-            <ul className="mt-5 space-y-3">
-              {[
-                "Fluxo centralizado",
-                "Resultados organizados",
-                "Componentes reunidos",
-                "Documentação integrada",
-              ].map((t) => (
-                <CheckItem key={t}>{t}</CheckItem>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className="mx-auto mt-8 max-w-4xl rounded-2xl border border-border bg-card p-6 text-center">
-          <p className="font-semibold">6 meses de acesso • R$37 pagamento único</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Equivalente a aproximadamente R$0,21 por dia durante 180 dias.
-          </p>
-          <div className="mt-5 flex justify-center">
-            <CTA source="comparacao">Quero acessar por R$37</CTA>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Seu uso e suas sugestões ajudarão a orientar as próximas melhorias da aplicação.
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Você recebe acesso aos recursos apresentados nesta página durante o período
+                contratado, sem mensalidade e sem renovação automática.
+              </p>
+            </div>
           </div>
         </div>
       </Section>
 
-      {/* 15 — FASE INICIAL */}
+      {/* 12 — FAQ */}
       <Section className="bg-secondary">
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <Heading
-            eyebrow="Grupo fundador"
-            title="Por que o acesso está sendo oferecido por R$37?"
-            text={
-              <>
-                <p>O Dimensionador Expert está iniciando uma nova fase.</p>
-                <p>
-                  Queremos colocar a plataforma nas mãos dos primeiros usuários, acompanhar sua
-                  utilização e utilizar o feedback recebido para continuar aprimorando o produto.
-                </p>
-                <p>
-                  Por isso, estamos disponibilizando esta condição inicial de acesso por 6 meses.
-                </p>
-              </>
-            }
-          />
-          <div className="space-y-3">
-            {[
-              [Check, "Você utiliza uma ferramenta funcional."],
-              [ListChecks, "Nós aprendemos com o uso real."],
-              [Sparkles, "O produto continua evoluindo."],
-            ].map(([I, t], i) => {
-              const Icon = I as typeof Zap;
-              return (
-                <div
-                  key={i}
-                  className="flex items-center gap-4 rounded-2xl border border-border bg-card p-5"
-                >
-                  <span className={iconBox}>
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <span className="font-semibold">{t as string}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </Section>
-
-      {/* 16 — FAQ */}
-      <Section>
         <Heading center title="Perguntas frequentes" />
         <Accordion type="single" collapsible className="mx-auto mt-10 max-w-3xl">
           {FAQ.map(([q, a], i) => (
@@ -875,27 +865,25 @@ function SalesPage() {
         </Accordion>
       </Section>
 
-      {/* 17 — CTA FINAL */}
-      <section className="px-5 pb-20">
+      {/* 13 — FECHAMENTO */}
+      <section className="px-5 py-20">
         <div className="mx-auto max-w-5xl rounded-3xl bg-navy px-6 py-14 text-center text-navy-foreground sm:px-12 sm:py-20">
           <h2 className="mx-auto max-w-3xl text-2xl font-bold tracking-tight sm:text-4xl">
-            Seu próximo dimensionamento pode começar em poucos minutos.
+            Seu próximo dimensionamento não precisa começar com cálculos à mão.
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-navy-foreground/75">
-            Centralize cálculos, componentes e documentação em uma única ferramenta.
+            Informe os dados do motor e da instalação. Receba o dimensionamento dos cabos e
+            dispositivos e as indicações dos fabricantes para apoiar sua escolha.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-2 text-sm">
-            {["Dimensionador Expert", "6 meses de acesso", "R$37", "Pagamento único"].map((t) => (
-              <span key={t} className="rounded-full border border-navy-foreground/20 px-3 py-1.5">
-                {t}
-              </span>
-            ))}
-          </div>
+          <p className="mt-8 text-2xl font-bold">6 meses de acesso por R$37</p>
+          <p className="mt-3 text-sm text-navy-foreground/75">
+            Pagamento único • Sem mensalidade • Sem renovação automática
+          </p>
           <div className="mt-8 flex justify-center">
             <CTA source="final">Quero acessar o Dimensionador Expert</CTA>
           </div>
           <p className="mt-4 text-sm text-navy-foreground/70">
-            Sem mensalidade • Sem renovação automática
+            Use online pelo computador, tablet ou celular.
           </p>
         </div>
       </section>
@@ -988,40 +976,39 @@ function SalesPage() {
 
 const FAQ: [string, string][] = [
   [
-    "O que é o Dimensionador Expert?",
-    "É uma ferramenta online de apoio ao dimensionamento de comandos elétricos, reunindo cálculos, resultados, componentes e documentação em um único ambiente.",
-  ],
-  ["Por quanto tempo terei acesso?", "6 meses a partir da ativação do acesso."],
-  [
-    "Vou pagar mensalidade?",
-    "Não. Nesta oferta inicial o pagamento é único: R$37 pelos 6 meses de acesso.",
+    "Preciso saber fazer os cálculos para usar?",
+    "Não precisa executar os cálculos manualmente. Você informa os dados do motor e as condições da instalação, e a ferramenta apresenta o dimensionamento. É importante preencher os dados corretamente e conferir a aplicação dos resultados.",
   ],
   [
-    "Haverá cobrança automática depois dos 6 meses?",
-    "Não nesta oferta. Ao final do período, você poderá receber uma nova opção de acesso caso queira continuar utilizando a ferramenta.",
+    "Quais dispositivos a ferramenta dimensiona?",
+    "Disjuntores dos circuitos de força e comando, contatores e relés, além do disjuntor-motor quando aplicável. Os dispositivos dependem do motor e da partida selecionada.",
+  ],
+  [
+    "A ferramenta indica modelos dos fabricantes?",
+    "Sim. As indicações são organizadas por WEG, Siemens e Schneider para você escolher o fabricante. A configuração final do dispositivo deve ser conferida antes da compra.",
+  ],
+  [
+    "Posso imprimir ou salvar os documentos em PDF?",
+    "Sim. Você pode imprimir a memória de cálculo, a proposta comercial e o memorial descritivo. Na janela de impressão, também pode escolher “Salvar como PDF”.",
+  ],
+  [
+    "Preciso preencher meus dados profissionais em cada proposta?",
+    "Não. Seus dados profissionais e sua logomarca ficam salvos para reutilização nas próximas propostas e memoriais. Os dados do cliente e do serviço são preenchidos para cada projeto.",
+  ],
+  [
+    "Os dimensionamentos e propostas ficam salvos?",
+    "Sim. Você pode acessar o histórico para consultar os dimensionamentos e retomar suas propostas.",
   ],
   [
     "Preciso instalar algum programa?",
-    "Não. O Dimensionador Expert funciona online através do navegador.",
+    "Não. A ferramenta funciona online pelo navegador, no computador, tablet ou celular. É necessário acesso à internet.",
   ],
   [
-    "Posso usar no celular?",
-    "Sim. A interface é responsiva e compatível com computadores, tablets e smartphones.",
+    "Quanto custa e por quanto tempo posso usar?",
+    "A oferta é de R$37 por 6 meses de acesso, contados a partir da ativação. O pagamento é único, sem mensalidade e sem renovação automática.",
   ],
   [
-    "A ferramenta substitui um profissional habilitado?",
-    "Não. O Dimensionador Expert é uma ferramenta de apoio ao dimensionamento. As condições reais da instalação, requisitos normativos e responsabilidade técnica devem ser avaliados pelo profissional responsável.",
-  ],
-  [
-    "Quais fabricantes aparecem no sistema?",
-    "Atualmente o sistema trabalha com referências disponíveis de fabricantes como WEG, Siemens e Schneider.",
-  ],
-  [
-    "Posso gerar documentação?",
-    "Sim. O Dimensionador Expert possui recursos para organizar os resultados e gerar documentação relacionada ao dimensionamento.",
-  ],
-  [
-    "O produto continuará recebendo melhorias?",
-    "Durante esta fase inicial, o produto poderá receber melhorias e atualizações. Usuários com acesso ativo terão acesso às funcionalidades liberadas dentro do período contratado, conforme disponibilidade.",
+    "A ferramenta substitui a avaliação do profissional?",
+    "Não. Ela apoia o dimensionamento. As condições reais da instalação, a configuração dos dispositivos e a responsabilidade técnica permanecem sob avaliação do profissional.",
   ],
 ];
