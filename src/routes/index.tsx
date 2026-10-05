@@ -256,7 +256,7 @@ function SalesPage() {
           <div className="flex min-w-0 items-center gap-2">
             <div className="flex items-center text-left" style={{ gap: 12 }}>
               <img
-                src="/logo-academia-eletricista.svg"
+                src="/logo-academia-eletricista.png"
                 alt="Academia do Eletricista"
                 width="61.42"
                 height="32"
@@ -895,7 +895,7 @@ function SalesPage() {
             <div className="flex items-center gap-2">
               <div className="flex items-center text-left" style={{ gap: 12 }}>
                 <img
-                  src="/logo-academia-eletricista.svg"
+                  src="/logo-academia-eletricista.png"
                   alt="Academia do Eletricista"
                   width="61.42"
                   height="32"
