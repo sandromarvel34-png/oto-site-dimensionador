@@ -1,6 +1,6 @@
 // Configure o checkout específico da oferta complementar de R$ 37,00. Nunca use o checkout do livro ou do curso.
 // Também aceita VITE_OTO_CHECKOUT_URL nas variáveis do projeto Lovable.
-export const CHECKOUT_URL: string = import.meta.env["VITE_OTO_CHECKOUT_URL"] || "";
+export const CHECKOUT_URL: string = import.meta.env["VITE_OTO_CHECKOUT_URL"] || "https://payfast.greenn.com.br/196443/offer/mkimrj";
 export const THANK_YOU_URL: string = import.meta.env["VITE_OTO_THANK_YOU_URL"] || "/obrigado";
 export const VIDEO_EMBED_URL: string = "https://www.youtube-nocookie.com/embed/rMAqEe2uzW8";
 export const PDF_EXAMPLE_URL = "";
